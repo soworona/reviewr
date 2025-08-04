@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#00233563',
+    backgroundColor: '#0524336c',
     paddingHorizontal: 13,
     paddingVertical: 24,
     justifyContent: 'space-between',
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 1,
     borderColor: '#ffffff59',
+    overflow:'hidden'
   },
   heading: {
     color: 'white',

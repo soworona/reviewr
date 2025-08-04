@@ -8,6 +8,7 @@ type InputComponentProps = {
 const IconMap: Record<string, any> = {
   user: require('../assets/icons/Union(1).png'), 
   lock: require('../assets/icons/Union.png'), 
+  email: require('../assets/icons/Email.png'), 
 };
 
 const InputComponent = (props : InputComponentProps) => {

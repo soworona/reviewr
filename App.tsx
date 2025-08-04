@@ -5,14 +5,14 @@
  * @format
  */
 
-import { StyleSheet, useColorScheme, View } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
+import { StyleSheet, View } from 'react-native';
+import SignupScreen from './src/screens/SignupScreen';
 
 function App() {
 
   return (
     <View style={styles.container}>
-      <LoginScreen/>
+      <SignupScreen/>
     </View>
   );
 }
