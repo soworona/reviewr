@@ -5,16 +5,17 @@
  * @format
  */
 
-import { StyleSheet, View } from 'react-native';
-import SignupScreen from './src/screens/SignupScreen';
+import { StyleSheet } from 'react-native';
+import AuthStack from './src/navigation/AuthStack';
+import { NavigationContainer } from '@react-navigation/native';
 
 function App() {
 
   return (
-    <View style={styles.container}>
-      <SignupScreen/>
-    </View>
-  );
+    <NavigationContainer>
+      <AuthStack/>
+    </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
