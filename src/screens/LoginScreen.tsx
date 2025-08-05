@@ -12,6 +12,7 @@ import styles from './style/styles';
 import { useState } from 'react';
 import { handleLoginWithEmail } from '../utils/FirebaseAuth';
 import Toast from 'react-native-toast-message';
+import AuthFormComponent from '../componets/AuthFormComponent';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
   const [email, setEmail] = useState('');
@@ -46,56 +47,14 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
       <View style={styles.container}>
         <Image source={require('../assets/LOGO.png')} style={styles.logo} />
 
-        <KeyboardAvoidingView behavior={'padding'} style={styles.formContainer}>
-          {/* <BlurView
-            style={{
-              paddingHorizontal: 18,
-              paddingVertical: 10,
-            }}
-            blurType="light"
-            blurAmount={10}
-            blurRadius={15}
-          > */}
-          <Text style={styles.heading}>Login</Text>
-          <Text style={styles.subheading}>Please sign in to continue.</Text>
-
-          <View style={{ gap: 10 }}>
-            <InputComponent
-              placeholder="Username"
-              icon="user"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <InputComponent
-              placeholder="Password"
-              icon="lock"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
-          <Text style={styles.highlight}>Forgot Password?</Text>
-
-          <ButtonComponent
-            label="Login"
-            onPress={() => handleLoginPress(email, password)}
-          />
-
-          <Text style={styles.regularTxt}>
-            Don't have an account? Please
-            <Text
-              style={{ color: '#FFB703' }}
-              onPress={() => {
-                navigation.navigate('Signup');
-              }}
-            >
-              {' '}
-              Sign Up{' '}
-            </Text>
-            first.
-          </Text>
-          {/* </BlurView> */}
-        </KeyboardAvoidingView>
+        <AuthFormComponent
+          formType="login"
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          onSubmit={() => handleLoginPress(email, password)}
+        />
       </View>
     </ImageBackground>
   );

@@ -12,6 +12,7 @@ import styles from './style/styles';
 import { useState } from 'react';
 import { handleSignUpWithEmail } from '../utils/FirebaseAuth';
 import Toast from 'react-native-toast-message';
+import AuthFormComponent from '../componets/AuthFormComponent';
 
 const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const [username, setUsername] = useState('');
@@ -19,11 +20,11 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const [password, setPassword] = useState('');
 
   const handleSignupPress = async (
-    username: string,
     email: string,
     password: string,
+    username: string,
   ) => {
-    const success = await handleSignUpWithEmail(username, email, password);
+    const success = await handleSignUpWithEmail( email, password, username);
     if (success) {
       Toast.show({
         type: 'success',
@@ -52,60 +53,17 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
       <View style={styles.container}>
         <Image source={require('../assets/LOGO.png')} style={styles.logo} />
 
-        <KeyboardAvoidingView behavior={'padding'} style={styles.formContainer}>
-          {/* <BlurView
-            style={{
-              paddingHorizontal: 18,
-              paddingVertical: 10,
-            }}
-            blurType="light"
-            blurAmount={10}
-            blurRadius={15}
-          > */}
-          <Text style={styles.heading}>Sign up</Text>
-          <Text style={styles.subheading}>Create an account to continue.</Text>
 
-          <View style={{ gap: 10, marginBottom: 19 }}>
-            <InputComponent
-              placeholder="Username"
-              icon="user"
-              value={username}
-              onChangeText={setUsername}
-            />
-            <InputComponent
-              placeholder="Email"
-              icon="email"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <InputComponent
-              placeholder="Password"
-              icon="lock"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
-
-          <ButtonComponent
-            label="Sign Up"
-            onPress={() => handleSignupPress(username, email, password)}
-          />
-
-          <Text style={styles.regularTxt}>
-            Already have an account? Go to the
-            <Text
-              style={{ color: '#FFB703' }}
-              onPress={() => {
-                navigation.navigate('Login');
-              }}
-            >
-              {' '}
-              Login Page
-            </Text>
-          </Text>
-          {/* </BlurView> */}
-        </KeyboardAvoidingView>
+        <AuthFormComponent
+          formType="signup"
+          username={username}
+          setUsername={setUsername}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          onSubmit={() => handleSignupPress(username, email, password)}
+        />
       </View>
     </ImageBackground>
   );
