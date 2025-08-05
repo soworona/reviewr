@@ -3,8 +3,9 @@ import InputComponent from '../componets/InputComponent';
 import { BlurView } from '@react-native-community/blur';
 import ButtonComponent from '../componets/ButtonComponent';
 import styles from './style/styles';
+import { RootStackScreenProp } from '../navigation/type';
 
-const SignupScreen = () => {
+const SignupScreen = ({navigation}: RootStackScreenProp<'Signup'>) => {
   return (
     <ImageBackground
       source={require('../assets/If.jpg')}
@@ -14,7 +15,7 @@ const SignupScreen = () => {
         <Image source={require('../assets/LOGO.png')} style={styles.logo} />
 
         <View style={styles.formContainer}>
-          <BlurView
+          {/* <BlurView
             style={{
               paddingHorizontal: 18,
               paddingVertical: 10,
@@ -22,7 +23,7 @@ const SignupScreen = () => {
             blurType="light"
             blurAmount={10}
             blurRadius={15}
-          >
+          > */}
             <Text style={styles.heading}>Sign up</Text>
             <Text style={styles.subheading}>
               Create an account to continue.
@@ -38,9 +39,12 @@ const SignupScreen = () => {
 
             <Text style={styles.regularTxt}>
               Already have an account? Go to the
-              <Text style={{ color: '#FFB703' }}> Login Page</Text>
+              <Text style={{ color: '#FFB703' }} 
+                              onPress={() => {
+                  navigation.navigate('Login');
+                }}> Login Page</Text>
             </Text>
-          </BlurView>
+          {/* </BlurView> */}
         </View>
       </View>
     </ImageBackground>

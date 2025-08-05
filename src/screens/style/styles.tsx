@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   bgImage: {
@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   formContainer: {
-    backgroundColor: '#ffffff3f',
+    backgroundColor: '#ffffff69',
     borderRadius: 40,
     borderWidth: 1,
     borderColor: '#ffffff59',
-    overflow:'hidden'
+    overflow: 'hidden',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
   },
   heading: {
     color: 'white',
@@ -50,8 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'white',
     textAlign: 'center',
-    marginTop:19,
-    marginBottom:19
+    marginTop: 19,
+    marginBottom: 19,
   },
 });
 
