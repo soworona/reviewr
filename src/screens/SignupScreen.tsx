@@ -11,20 +11,38 @@ import { RootStackScreenProp } from '../navigation/type';
 import styles from './style/styles';
 import { useState } from 'react';
 import { handleSignUpWithEmail } from '../utils/FirebaseAuth';
+import Toast from 'react-native-toast-message';
 
 const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('');
 
-  const handleSignupPress = async (username:string, email:string, password:string) => {
-    const success = await handleSignUpWithEmail(username, email, password)
-    if(success){
-      navigation.navigate('Login')
+  const handleSignupPress = async (
+    username: string,
+    email: string,
+    password: string,
+  ) => {
+    const success = await handleSignUpWithEmail(username, email, password);
+    if (success) {
+      Toast.show({
+        type: 'success',
+        text1: 'Congrats!',
+        text2: 'Your account was created',
+        position: 'top',
+      });
 
+      navigation.goBack();
     }
-  }
+    else{
+      Toast.show({
+        type: 'error',
+        text1: 'Something went wrong',
+        text2: 'Try again.',
+        position: 'top',
+      });
+    }
+  };
 
   return (
     <ImageBackground
@@ -48,12 +66,31 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
           <Text style={styles.subheading}>Create an account to continue.</Text>
 
           <View style={{ gap: 10, marginBottom: 19 }}>
-            <InputComponent placeholder="Username" icon="user" value={username} onChangeText={setUsername}/>
-            <InputComponent placeholder="Email" icon="email" value={email} onChangeText={setEmail}/>
-            <InputComponent placeholder="Password" icon="lock" value={password} onChangeText={setPassword} secureTextEntry/>
+            <InputComponent
+              placeholder="Username"
+              icon="user"
+              value={username}
+              onChangeText={setUsername}
+            />
+            <InputComponent
+              placeholder="Email"
+              icon="email"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <InputComponent
+              placeholder="Password"
+              icon="lock"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
           </View>
 
-          <ButtonComponent label="Sign Up" onPress={() => handleSignupPress(username, email, password)}/>
+          <ButtonComponent
+            label="Sign Up"
+            onPress={() => handleSignupPress(username, email, password)}
+          />
 
           <Text style={styles.regularTxt}>
             Already have an account? Go to the
@@ -62,7 +99,9 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
               onPress={() => {
                 navigation.navigate('Login');
               }}
-            > Login Page
+            >
+              {' '}
+              Login Page
             </Text>
           </Text>
           {/* </BlurView> */}
