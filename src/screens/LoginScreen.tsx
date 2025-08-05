@@ -3,8 +3,12 @@ import ButtonComponent from '../componets/ButtonComponent';
 import InputComponent from '../componets/InputComponent';
 import { RootStackScreenProp } from '../navigation/type';
 import styles from './style/styles';
+import { useState } from 'react';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
+    
   return (
     <ImageBackground
       source={require('../assets/BoyandHeron.jpg')}
@@ -29,12 +33,12 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
             <Text style={styles.subheading}>Please sign in to continue.</Text>
 
             <View style={{ gap: 10 }}>
-              <InputComponent placeholder="Username" icon="user" />
-              <InputComponent placeholder="Password" icon="lock" />
+              <InputComponent placeholder="Username" icon="user" value={email} onChangeText={setEmail}/>
+              <InputComponent placeholder="Password" icon="lock" value={password} onChangeText={setPassword} secureTextEntry/>
             </View>
             <Text style={styles.highlight}>Forgot Password?</Text>
 
-            <ButtonComponent label="Login" />
+            <ButtonComponent label="Login" onPress={() => {}}/>
 
             <Text style={styles.regularTxt}>
               Don't have an account? Please
