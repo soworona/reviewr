@@ -5,10 +5,10 @@ import ButtonComponent from '../componets/ButtonComponent';
 import styles from './style/styles';
 import { RootStackScreenProp } from '../navigation/type';
 
-const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
+const SignupScreen = ({navigation}: RootStackScreenProp<'Signup'>) => {
   return (
     <ImageBackground
-      source={require('../assets/BoyandHeron.jpg')}
+      source={require('../assets/If.jpg')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
@@ -24,29 +24,25 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
             blurAmount={10}
             blurRadius={15}
           > */}
-            <Text style={styles.heading}>Login</Text>
-            <Text style={styles.subheading}>Please sign in to continue.</Text>
+            <Text style={styles.heading}>Sign up</Text>
+            <Text style={styles.subheading}>
+              Create an account to continue.
+            </Text>
 
-            <View style={{ gap: 10 }}>
+            <View style={{ gap: 10, marginBottom:19 }}>
               <InputComponent placeholder="Username" icon="user" />
+              <InputComponent placeholder="Email" icon="email" />
               <InputComponent placeholder="Password" icon="lock" />
             </View>
-            <Text style={styles.highlight}>Forgot Password?</Text>
 
-            <ButtonComponent label="Login" />
+            <ButtonComponent label="Sign Up" />
 
             <Text style={styles.regularTxt}>
-              Don't have an account? Please
-              <Text
-                style={{ color: '#FFB703' }}
-                onPress={() => {
-                  navigation.navigate('Signup');
-                }}
-              >
-                {' '}
-                Sign Up{' '}
-              </Text>
-              first.
+              Already have an account? Go to the
+              <Text style={{ color: '#FFB703' }} 
+                              onPress={() => {
+                  navigation.navigate('Login');
+                }}> Login Page</Text>
             </Text>
           {/* </BlurView> */}
         </View>
@@ -55,4 +51,4 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;

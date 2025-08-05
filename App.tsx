@@ -5,16 +5,17 @@
  * @format
  */
 
-import { StyleSheet, useColorScheme, View } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
+import { StyleSheet } from 'react-native';
+import AuthStack from './src/navigation/AuthStack';
+import { NavigationContainer } from '@react-navigation/native';
 
 function App() {
 
   return (
-    <View style={styles.container}>
-      <LoginScreen/>
-    </View>
-  );
+    <NavigationContainer>
+      <AuthStack/>
+    </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
