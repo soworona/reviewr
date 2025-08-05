@@ -1,9 +1,8 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import InputComponent from '../componets/InputComponent';
-import { BlurView } from '@react-native-community/blur';
+import { Image, ImageBackground, KeyboardAvoidingView, Text, View } from 'react-native';
 import ButtonComponent from '../componets/ButtonComponent';
-import styles from './style/styles';
+import InputComponent from '../componets/InputComponent';
 import { RootStackScreenProp } from '../navigation/type';
+import styles from './style/styles';
 
 const SignupScreen = ({navigation}: RootStackScreenProp<'Signup'>) => {
   return (
@@ -14,7 +13,9 @@ const SignupScreen = ({navigation}: RootStackScreenProp<'Signup'>) => {
       <View style={styles.container}>
         <Image source={require('../assets/LOGO.png')} style={styles.logo} />
 
-        <View style={styles.formContainer}>
+        <KeyboardAvoidingView
+        behavior={'padding'}
+        style={styles.formContainer}>
           {/* <BlurView
             style={{
               paddingHorizontal: 18,
@@ -45,7 +46,7 @@ const SignupScreen = ({navigation}: RootStackScreenProp<'Signup'>) => {
                 }}> Login Page</Text>
             </Text>
           {/* </BlurView> */}
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </ImageBackground>
   );
