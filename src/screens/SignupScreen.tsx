@@ -21,7 +21,7 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const handleSignupPress = async (username:string, email:string, password:string) => {
     const success = await handleSignUpWithEmail(username, email, password)
     if(success){
-      navigation.navigate('Home')
+      navigation.navigate('Login')
 
     }
   }
