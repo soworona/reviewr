@@ -6,30 +6,22 @@ export async function handleSignUpWithEmail(
   email: string,
   password: string,
 ) {
-  await firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      Toast.show({
-        type: 'success',
-        text1: 'Welcome back!',
-        text2: 'Successfully signed in.',
-      });
-    })
-    .catch(err => {
+  try{
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    console.log('Signup success');
+    return true;
+  }catch(error: any) {
       let message = 'Something went wrong';
-      if (err.code === 'auth/invalid-email') {
+
+      if (error.code === 'auth/email-already-in-use') {
+        message = 'That email is already in use!';
+      } else if (error.code === 'auth/invalid-email') {
         message = 'That email is invalid!';
-      } else if (err.code === 'auth/user-not-found') {
-        message = 'No account found with this email';
-      } else if (err.code === 'auth/wrong-password') {
-        message = 'Incorrect password';
+      } else if (error.code === 'auth/weak-password') {
+        message = 'Password should be at least 6 characters.';
       }
 
-      Toast.show({
-        type: 'error',
-        text1: 'Login failed',
-        text2: message,
-      });
-    });
+      console.log('error', message);
+      return false;
+    };
 }

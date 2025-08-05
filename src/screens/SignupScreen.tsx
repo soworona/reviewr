@@ -18,13 +18,14 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
 
-  const handleSignupPress = (username:string, email:string, password:string) => {
-    handleSignUpWithEmail(username, email, password)
-    .then(() =>
+  const handleSignupPress = async (username:string, email:string, password:string) => {
+    const success = await handleSignUpWithEmail(username, email, password)
+    if(success){
       navigation.navigate('Home')
-    )
+
+    }
   }
-  
+
   return (
     <ImageBackground
       source={require('../assets/If.jpg')}
