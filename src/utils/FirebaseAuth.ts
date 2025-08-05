@@ -2,9 +2,9 @@ import { firebase } from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 
 export async function handleSignUpWithEmail(
-  username: string,
   email: string,
   password: string,
+  username: string,
 ) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
