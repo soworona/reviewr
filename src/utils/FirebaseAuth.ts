@@ -26,7 +26,7 @@ export async function handleSignUpWithEmail(
   }
 }
 
-export async function handleLogin(email: string, password: string) {
+export async function handleLoginWithEmail(email: string, password: string) {
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
     console.log('sign in success');
