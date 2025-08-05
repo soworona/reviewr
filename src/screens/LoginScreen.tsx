@@ -11,19 +11,32 @@ import { RootStackScreenProp } from '../navigation/type';
 import styles from './style/styles';
 import { useState } from 'react';
 import { handleLoginWithEmail } from '../utils/FirebaseAuth';
+import Toast from 'react-native-toast-message';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLoginPress = async (email: string, password: string) => {
     const success = await handleLoginWithEmail(email, password);
-    if(success)
-    {
-      navigation.navigate('Home')
+    if (success) {
+      Toast.show({
+        type: 'success',
+        text1: 'Congrats!',
+        text2: 'You have successfully logged in!',
+        position: 'top',
+      });
+
+      navigation.navigate('Home');
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Something went wrong',
+        text2: 'Try again.',
+        position: 'top',
+      });
     }
-  }
+  };
 
   return (
     <ImageBackground
@@ -63,7 +76,10 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
           </View>
           <Text style={styles.highlight}>Forgot Password?</Text>
 
-          <ButtonComponent label="Login" onPress={() => handleLoginPress(email, password)} />
+          <ButtonComponent
+            label="Login"
+            onPress={() => handleLoginPress(email, password)}
+          />
 
           <Text style={styles.regularTxt}>
             Don't have an account? Please
