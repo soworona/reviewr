@@ -1,11 +1,11 @@
 import { Text, View } from "react-native"
 
-const HomeScreen = () => {
+const SearchScreen = () => {
     return(
         <View>
-            <Text>Home</Text>
+            <Text>Search</Text>
         </View>
     )
 }
 
-export default HomeScreen;
+export default SearchScreen;
