@@ -18,7 +18,6 @@ export async function handleSignUpWithEmail(
     })
     .catch(err => {
       let message = 'Something went wrong';
-
       if (err.code === 'auth/invalid-email') {
         message = 'That email is invalid!';
       } else if (err.code === 'auth/user-not-found') {
