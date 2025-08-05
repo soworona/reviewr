@@ -5,14 +5,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import ButtonComponent from '../componets/ButtonComponent';
-import InputComponent from '../componets/InputComponent';
-import { RootStackScreenProp } from '../navigation/type';
+import ButtonComponent from '../../componets/ButtonComponent';
+import InputComponent from '../../componets/InputComponent';
+import { RootStackScreenProp } from '../../navigation/type';
 import styles from './style/styles';
 import { useState } from 'react';
-import { handleSignUpWithEmail } from '../utils/FirebaseAuth';
+import { handleSignUpWithEmail } from '../../utils/FirebaseAuth';
 import Toast from 'react-native-toast-message';
-import AuthFormComponent from '../componets/AuthFormComponent';
+import AuthFormComponent from '../../componets/AuthFormComponent';
 
 const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const [username, setUsername] = useState('');

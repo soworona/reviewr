@@ -1,18 +1,14 @@
+import { useState } from 'react';
 import {
   Image,
   ImageBackground,
-  KeyboardAvoidingView,
-  Text,
-  View,
+  View
 } from 'react-native';
-import ButtonComponent from '../componets/ButtonComponent';
-import InputComponent from '../componets/InputComponent';
-import { RootStackScreenProp } from '../navigation/type';
-import styles from './style/styles';
-import { useState } from 'react';
-import { handleLoginWithEmail } from '../utils/FirebaseAuth';
 import Toast from 'react-native-toast-message';
-import AuthFormComponent from '../componets/AuthFormComponent';
+import AuthFormComponent from '../../componets/AuthFormComponent';
+import { RootStackScreenProp } from '../../navigation/type';
+import { handleLoginWithEmail } from '../../utils/FirebaseAuth';
+import styles from './style/styles';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
   const [email, setEmail] = useState('');
