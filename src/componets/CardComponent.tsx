@@ -1,10 +1,11 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const CardComponent = ({ movie }: { movie: any }) => {
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.img} resizeMode="cover" />
+      <FastImage source={{ uri: imageUrl }} style={styles.img} resizeMode="cover" />
       <Text style={styles.heading} numberOfLines={2} ellipsizeMode="tail">
         {movie.title}
       </Text>
@@ -22,7 +23,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 160,
     borderRadius: 8,
-    backgroundColor: 'pink',
   },
   heading: {
     color: 'white',

@@ -3,6 +3,7 @@ import CardComponent from './CardComponent';
 import Config from 'react-native-config';
 import { useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
 
 type CarouselComponentProps = {
   label: string;
@@ -10,17 +11,20 @@ type CarouselComponentProps = {
 const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<any[]>([]);
 
-  const urlMap : Record<string, string> = {}
+  const urlMap : Record<string, string> = {
+    'New Release': 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+    'Upcoming Movies': 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=2',
+    'Ranked Movies': 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=4'
+  }
   useEffect(() => {
     const getNowPlaying = async () => {
+      console.log("api",Config.API_BEARER_TOKEN )
       try {
-        const axios = require('axios').default;
-        const response = await axios.get(
-          'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+        const response = await axios.get(urlMap[props.label],
           {
             headers: {
               accept: 'application/json',
-              Authorization: `Bearer ${Config.API_BEARER_TOKEN}`,
+              Authorization: `Bearer ${Config.API_KEY}`,
             },
           },
         );
@@ -36,7 +40,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
     };
 
     getNowPlaying();
-  }, []);
+  }, [props.label]);
 
   return (
     <View style={styles.container}>

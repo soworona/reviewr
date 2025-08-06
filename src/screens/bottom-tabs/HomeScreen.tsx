@@ -16,7 +16,7 @@ const HomeScreen = () => {
         </Text>
       </View>
 
-      <CarouselComponent label="New Releases" />
+      <CarouselComponent label="New Release" />
       <CarouselComponent label="Upcoming Movies" />
       <CarouselComponent label="Ranked Movies" />
     </ScrollView>
