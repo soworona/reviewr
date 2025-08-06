@@ -10,6 +10,7 @@ type CarouselComponentProps = {
 const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<any[]>([]);
 
+  const urlMap : Record<string, string> = {}
   useEffect(() => {
     const getNowPlaying = async () => {
       try {
