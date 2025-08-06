@@ -3,19 +3,23 @@ import CarasoulComponent from '../../componets/CarouselComponent';
 import Config from 'react-native-config';
 
 const HomeScreen = () => {
-const url = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
+  const axios = require('axios').default;
+  const url ='https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
+  
   const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-    Authorization: `Bearer ${Config.API_BEARER_TOKEN}`, 
-    },
-  };
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer ${Config.API_BEARER_TOKEN}'
+  }
+};
 
-  fetch(url, options)
-    .then(res => res.json())
-    .then(json => console.log(json))
-    .catch(err => console.error(err));
+axios
+  .request(options)
+  .then((res: any) => console.log(res.data))
+  .catch((err: any) => console.error(err));
+
   return (
     <ScrollView
       contentContainerStyle={styles.container}
