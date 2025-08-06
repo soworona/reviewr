@@ -1,25 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Config from 'react-native-config';
 import CarouselComponent from '../../componets/CarouselComponent';
+
 const HomeScreen = () => {
-  const axios = require('axios').default;
-  const url =
-    'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
-
-  const options = {
-    method: 'GET',
-    url: url,
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${Config.API_BEARER_TOKEN}`,
-    },
-  };
-
-  axios
-    .request(options)
-    .then((res: any) => console.log(res.data))
-    .catch((err: any) => console.error(err));
-
   return (
     <ScrollView
       contentContainerStyle={styles.container}
