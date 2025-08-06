@@ -6,15 +6,32 @@
  */
 
 import { StyleSheet } from 'react-native';
-import AuthStack from './src/navigation/AuthStack';
+import { useEffect, useState } from 'react';
+import { FirebaseAuthTypes, getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
+import AuthStack from './src/navigation/AuthStack';
 import Toast from 'react-native-toast-message';
+import AppStack from './src/navigation/AppStack';
 
 function App() {
-
+  const [initializing, setInitializing] = useState<boolean>(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  
+  function handleAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+  
+  useEffect(() => {
+        const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
+      return subscriber;
+    }, []);
+    
+  if (initializing) return null;
+  
   return (
     <NavigationContainer>
-      <AuthStack/>
+      {user? <AppStack/> : <AuthStack/>}
       <Toast />
     </NavigationContainer>
     );
@@ -27,3 +44,7 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+function auth() {
+  throw new Error('Function not implemented.');
+}
+
