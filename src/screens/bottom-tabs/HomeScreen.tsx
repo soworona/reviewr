@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import CarasoulComponent from '../../componets/CarouselComponent';
 import Config from 'react-native-config';
+import CarouselComponent from '../../componets/CarouselComponent';
 const HomeScreen = () => {
   const axios = require('axios').default;
   const url =
@@ -8,7 +8,7 @@ const HomeScreen = () => {
 
   const options = {
     method: 'GET',
-    url: 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
+    url: url,
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${Config.API_BEARER_TOKEN}`,
@@ -34,9 +34,9 @@ const HomeScreen = () => {
         </Text>
       </View>
 
-      <CarasoulComponent label="New Releases" />
-      <CarasoulComponent label="Upcoming Movies" />
-      <CarasoulComponent label="Ranked Movies" />
+      <CarouselComponent label="New Releases" />
+      <CarouselComponent label="Upcoming Movies" />
+      <CarouselComponent label="Ranked Movies" />
     </ScrollView>
   );
 };
