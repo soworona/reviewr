@@ -3,7 +3,7 @@ import { Text, View } from "react-native"
 const WishlistScreen = () => {
     return(
         <View>
-            <Text>Search</Text>
+            <Text>Wishlist</Text>
         </View>
     )
 }

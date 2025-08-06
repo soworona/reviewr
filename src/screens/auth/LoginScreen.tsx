@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
         position: 'top',
       });
 
-      navigation.navigate('Home');
+      navigation.navigate('App');
     } else {
       Toast.show({
         type: 'error',
@@ -37,11 +37,11 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
 
   return (
     <ImageBackground
-      source={require('../assets/BoyandHeron.jpg')}
+      source={require('../../assets/BoyandHeron.jpg')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
-        <Image source={require('../assets/LOGO.png')} style={styles.logo} />
+        <Image source={require('../../assets/LOGO.png')} style={styles.logo} />
 
         <AuthFormComponent
           formType="login"
