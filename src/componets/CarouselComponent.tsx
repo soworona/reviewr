@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import CardComponent from './CardComponent';
 
-const CarouselComponent = () => {
+type CarouselComponentProps = {
+  label: string;
+}
+const CarouselComponent = (props: CarouselComponentProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>New Releases</Text>
-      <View style={styles.carousel}>
+      <Text style={styles.heading}>{props.label}</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.carousel}>
         <CardComponent />
         <CardComponent />
         <CardComponent />
-      </View>
+      </ScrollView>
     </View>
   );
 };
