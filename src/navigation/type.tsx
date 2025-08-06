@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type RootStackParamList = {
     Login: undefined;
     Signup: undefined;
-    Home: undefined
+    App: undefined; //BottomTab
 }
 
 export type BottomTabParamList = {
@@ -12,6 +12,7 @@ export type BottomTabParamList = {
     Wishlist: undefined;
     Profile: undefined;
 }
+
 
 export type RootStackScreenProp<T extends keyof RootStackParamList> = 
 NativeStackScreenProps<RootStackParamList, T>

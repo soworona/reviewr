@@ -3,7 +3,7 @@ import { Text, View } from "react-native"
 const ProfileScreen = () => {
     return(
         <View>
-            <Text>Search</Text>
+            <Text>Profile</Text>
         </View>
     )
 }
