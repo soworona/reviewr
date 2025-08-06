@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native"
+import CarasoulComponent from "../../componets/CarouselComponent";
 
 const HomeScreen = () => {
     return(
@@ -6,7 +7,7 @@ const HomeScreen = () => {
             <Text style={styles.heading}>Welcome back, <Text style = {{color: '#FFCA45'}}>Dilhara</Text>!</Text>
             <Text style={styles.subheading}>Review or log film you’ve watched...</Text>
 
-            
+            <CarasoulComponent />
         </View>
     )
 }
@@ -21,12 +22,14 @@ const styles = StyleSheet.create({
     heading: {
         color:'white',
         fontSize:20,
-        fontWeight: 700
+        fontWeight: 700,
+        marginTop:25
     },
     subheading:{
         color:'white',
         fontSize: 14,
         fontWeight: 400,
+        marginBottom:25
     }
 })
 export default HomeScreen;
