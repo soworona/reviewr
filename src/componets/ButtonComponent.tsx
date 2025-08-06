@@ -2,10 +2,11 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 type ButtonComponentProps ={
     label: string
+    onPress : () => void
 }
 const ButtonComponent = (props: ButtonComponentProps) => {
     return(
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Text style={ styles.text }>{props.label}</Text>
         </TouchableOpacity>
     )

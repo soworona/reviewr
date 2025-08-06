@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Image, StyleSheet, TextInput, View } from 'react-native';
 
 type InputComponentProps = {
   placeholder: string;
-  icon: string
+  icon: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  secureTextEntry? : boolean
 };
 
 const IconMap: Record<string, any> = {
@@ -15,7 +19,12 @@ const InputComponent = (props : InputComponentProps) => {
   return (
     <View style={styles.inputWrapper}>
       <Image source={IconMap[props.icon]} style={styles.icon} />
-      <TextInput placeholder={props.placeholder} style={styles.textInput} 
+      <TextInput 
+      value={props.value}
+      onChangeText={props.onChangeText}
+      secureTextEntry={props.secureTextEntry}
+      style={styles.textInput} 
+      placeholder={props.placeholder} 
       placeholderTextColor={'#FFFFFF80'}  />
     </View>
   );
