@@ -1,9 +1,9 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import CardComponent from './CardComponent';
-import Config from 'react-native-config';
 import { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Config } from 'react-native-config';
 import Toast from 'react-native-toast-message';
-import axios from 'axios';
+import { AxiosInstance } from '../utils/Axios';
+import CardComponent from './CardComponent';
 
 type CarouselComponentProps = {
   label: string;
@@ -11,25 +11,26 @@ type CarouselComponentProps = {
 const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<any[]>([]);
 
-  const urlMap : Record<string, string> = {
-    'New Release': 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
-    'Upcoming Movies': 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=2',
-    'Ranked Movies': 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=4'
-  }
+  const urlMap: Record<string, string> = {
+    'New Release': 'now_playing?language=en-US&page=1',
+    'Upcoming Movies': 'upcoming?language=en-US&page=2',
+    'Ranked Movies': 'top_rated?language=en-US&page=4',
+  };
   useEffect(() => {
+    console.log('api', Config.API_BEARER_TOKEN);
     const getNowPlaying = async () => {
-      console.log("api",Config.API_BEARER_TOKEN )
       try {
-        const response = await axios.get(urlMap[props.label],
-          {
-            headers: {
-              accept: 'application/json',
-              Authorization: `Bearer ${Config.API_KEY}`,
-            },
-          },
-        );
+        // const response = await axios.get(urlMap[props.label],
+        //   {
+        //     headers: {
+        //       accept: 'application/json',
+        //       Authorization: `Bearer ${Config.API_KEY}`,
+        //     },
+        //   },
+        // );
+
+        const response = await AxiosInstance.get(urlMap[props.label]);
         setMovies(response.data.results);
-        console.log('response', response.data.results);
       } catch (err) {
         Toast.show({
           type: 'error',
