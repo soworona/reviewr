@@ -1,7 +1,10 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import CarouselComponent from '../../componets/CarouselComponent';
+import CarouselComponent from '../../../componets/CarouselComponent';
 
 const HomeScreen = () => {
+  const handleCardPress = () => {
+
+  }
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -16,9 +19,9 @@ const HomeScreen = () => {
         </Text>
       </View>
 
-      <CarouselComponent label="New Release" />
-      <CarouselComponent label="Upcoming Movies" />
-      <CarouselComponent label="Ranked Movies" />
+      <CarouselComponent label="New Release"  urlPath='now_playing?language=en-US&page=1' onPress={handleCardPress}/>
+      <CarouselComponent label="Upcoming Movies" urlPath='upcoming?language=en-US&page=2' onPress={handleCardPress}/>
+      <CarouselComponent label="Ranked Movies" urlPath='top_rated?language=en-US&page=5' onPress={handleCardPress}/>
     </ScrollView>
   );
 };

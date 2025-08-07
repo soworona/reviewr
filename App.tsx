@@ -9,9 +9,10 @@ import { StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 import { FirebaseAuthTypes, getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStack from './src/navigation/AuthStack';
+import AuthStack from './src/navigation/RootStack';
 import Toast from 'react-native-toast-message';
 import AppStack from './src/navigation/AppStack';
+import RootStack from './src/navigation/RootStack';
 
 function App() {
   const [initializing, setInitializing] = useState<boolean>(true);
@@ -31,7 +32,7 @@ function App() {
   
   return (
     <NavigationContainer key={user? 'app' : 'auth'}>
-      {user? <AppStack/> : <AuthStack/>}
+      <RootStack/> 
       <Toast />
     </NavigationContainer>
     );
