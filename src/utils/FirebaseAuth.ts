@@ -1,4 +1,4 @@
-import { firebase } from '@react-native-firebase/auth';
+import { firebase, getAuth, signOut } from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 
 export async function handleSignUpWithEmail(
@@ -44,5 +44,22 @@ export async function handleLoginWithEmail(email: string, password: string) {
     }
     console.log('error', message);
     return false;
+  }
+}
+
+export async function handleSignOut() {
+  try {
+    await signOut(getAuth());
+    Toast.show({
+      type: 'success',
+      text1: 'Goodbye!',
+      text2: 'See you again!',
+    });
+  } catch (error:any) {
+    Toast.show({
+      type: 'error',
+      text1: 'Sign out failed',
+      text2: error.message,
+    });
   }
 }

@@ -30,7 +30,7 @@ function App() {
   if (initializing) return null;
   
   return (
-    <NavigationContainer>
+    <NavigationContainer key={user? 'app' : 'auth'}>
       {user? <AppStack/> : <AuthStack/>}
       <Toast />
     </NavigationContainer>
@@ -44,7 +44,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-function auth() {
-  throw new Error('Function not implemented.');
-}
 
