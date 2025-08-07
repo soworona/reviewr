@@ -1,11 +1,11 @@
 import { FirebaseAuthTypes, getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import DetailsScreen from '../screens/app/DetailsScreen';
-import LoginScreen from '../screens/auth/LoginScreen';
-import SignupScreen from '../screens/auth/SignupScreen';
+import DetailsScreen from '../screens/DetailsScreen';
+import LoginScreen from '../screens/LoginScreen';
 import BottomTab from './BottomTab';
 import { RootStackParamList } from './type';
+import SignupScreen from '../screens/SignupScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

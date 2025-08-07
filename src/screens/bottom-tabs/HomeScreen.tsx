@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import CarouselComponent from '../../../componets/CarouselComponent';
+import CarouselComponent from '../../componets/CarouselComponent';
 
 const HomeScreen = () => {
   const handleCardPress = () => {

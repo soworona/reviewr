@@ -5,9 +5,9 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import AuthFormComponent from '../../componets/AuthFormComponent';
-import { RootStackScreenProp } from '../../navigation/type';
-import { handleLoginWithEmail } from '../../utils/FirebaseAuth';
+import AuthFormComponent from '../componets/AuthFormComponent';
+import { RootStackScreenProp } from '../navigation/type';
+import { handleLoginWithEmail } from '../utils/FirebaseAuth';
 import styles from './style/styles';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {

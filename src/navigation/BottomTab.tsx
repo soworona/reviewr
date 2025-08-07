@@ -11,10 +11,10 @@ import {
   BottomTabParamList,
   BottomTabsProp
 } from './type';
-import HomeScreen from '../screens/app/bottom-tabs/HomeScreen';
-import SearchScreen from '../screens/app/bottom-tabs/SearchScreen';
-import WishlistScreen from '../screens/app/bottom-tabs/WishlistScreen';
-import ProfileScreen from '../screens/app/bottom-tabs/ProfileScreen';
+import HomeScreen from '../screens/bottom-tabs/HomeScreen';
+import SearchScreen from '../screens/bottom-tabs/SearchScreen';
+import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
+import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
