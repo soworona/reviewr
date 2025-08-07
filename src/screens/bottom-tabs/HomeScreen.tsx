@@ -1,9 +1,10 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import CarouselComponent from '../../componets/CarouselComponent';
+import { BottomTabsProp } from '../../navigation/type';
 
-const HomeScreen = () => {
-  const handleCardPress = () => {
-
+const HomeScreen = ({navigation}: BottomTabsProp<'Home'>) => {
+  const handleCardPress = (movie_id:number) => {
+    navigation.navigate('Details',{movie_id: movie_id});
   }
   return (
     <ScrollView
