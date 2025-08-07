@@ -8,7 +8,7 @@ import ButtonComponent from '../componets/ButtonComponent';
 
 const DetailsScreen = ({ route, navigation }: RootStackScreenProp<'Details'>) => {
   const id = route.params.movie_id;
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<Movie>();
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -25,7 +25,7 @@ const DetailsScreen = ({ route, navigation }: RootStackScreenProp<'Details'>) =>
   }, [id]);
 
   const handleAddReviewPress = ()=>{
-    navigation.navigate('App')
+    navigation.navigate('AddReview', {movie_id: id})
   }
   return (
     <View style={styles.container}>
