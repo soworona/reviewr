@@ -36,11 +36,11 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/BoyandHeron.jpg')}
+      source={require('../../src/assets/BoyandHeron.jpg')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
-        <Image source={require('../../assets/LOGO.png')} style={styles.logo} />
+        <Image source={require('../../src/assets/LOGO.png')} style={styles.logo} />
 
         <AuthFormComponent
           formType="login"
