@@ -6,6 +6,7 @@ import LoginScreen from '../screens/LoginScreen';
 import BottomTab from './BottomTab';
 import { RootStackParamList } from './type';
 import SignupScreen from '../screens/SignupScreen';
+import AddReviewScreen from '../screens/AddReviewScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -34,6 +35,7 @@ export default function RootStack( ) {
       :<>
       <Stack.Screen name="App" component={BottomTab} />
       <Stack.Screen name='Details' component={DetailsScreen} />
+      <Stack.Screen name='AddReview' component={AddReviewScreen} />
       </>}
     </Stack.Navigator>
   );
