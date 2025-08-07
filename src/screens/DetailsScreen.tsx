@@ -6,7 +6,7 @@ import { AxiosInstance } from '../utils/Axios';
 import { Button } from '@react-navigation/elements';
 import ButtonComponent from '../componets/ButtonComponent';
 
-const DetailsScreen = ({ route }: RootStackScreenProp<'Details'>) => {
+const DetailsScreen = ({ route, navigation }: RootStackScreenProp<'Details'>) => {
   const id = route.params.movie_id;
   const [movie, setMovie] = useState<Movie | null>(null);
 
@@ -24,6 +24,9 @@ const DetailsScreen = ({ route }: RootStackScreenProp<'Details'>) => {
     getMovieDetails();
   }, [id]);
 
+  const handleAddReviewPress = ()=>{
+    navigation.navigate('App')
+  }
   return (
     <View style={styles.container}>
       {movie && (
@@ -34,7 +37,7 @@ const DetailsScreen = ({ route }: RootStackScreenProp<'Details'>) => {
           </Text>
           <Text>{movie.overview}</Text>
         </View>
-          <ButtonComponent label="Add review" onPress={() => {}} />
+          <ButtonComponent label="Add review" onPress={handleAddReviewPress} />
             <Text style={styles.txt}>Your reviews</Text>
         </>
       )}
