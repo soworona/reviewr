@@ -24,7 +24,6 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
         position: 'top',
       });
 
-      navigation.navigate('App');
     } else {
       Toast.show({
         type: 'error',
