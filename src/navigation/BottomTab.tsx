@@ -1,14 +1,27 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomTabParamList } from './type';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity
+} from 'react-native';
 import HomeScreen from '../screens/bottom-tabs/HomeScreen';
 import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
 import SearchScreen from '../screens/bottom-tabs/SearchScreen';
 import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { handleSignOut } from '../utils/FirebaseAuth';
+import {
+  BottomTabParamList,
+  BottomTabsProp
+} from './type';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const BottomTab = () => {
+const BottomTab = ({ navigation }: BottomTabsProp<'Home'>) => {
+  const handleLogoutPress = () => {
+    handleSignOut();
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -62,12 +75,22 @@ const BottomTab = () => {
             );
           }
           return (
-            <Text style={{ color: 'white', fontSize: 18, marginLeft:20 }}>{route.name}</Text>
+            <Text style={{ color: 'white', fontSize: 18, marginLeft: 20 }}>
+              {route.name}
+            </Text>
           );
         },
         headerRight: () => {
           if (route.name === 'Profile') {
-            return <Text style={styles.logoutBtn}>Logout</Text>;
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  handleLogoutPress();
+                }}
+              >
+                <Text style={styles.logoutBtn}>Logout</Text>
+              </TouchableOpacity>
+            );
           }
         },
         tabBarLabelStyle: {
@@ -92,15 +115,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   logoutBtn: {
-    marginRight:20,
-    color:'white',
-    backgroundColor:'#FFB703',
-    paddingVertical:10,
-    paddingHorizontal:15,
-    borderRadius:10,
-    fontWeight:600,
-    fontSize:15
-  }
+    marginRight: 20,
+    color: 'white',
+    backgroundColor: '#FFB703',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    fontWeight: 600,
+    fontSize: 15,
+  },
 });
 
 export default BottomTab;
