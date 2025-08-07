@@ -5,9 +5,9 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import AuthFormComponent from '../../componets/AuthFormComponent';
-import { RootStackScreenProp } from '../../navigation/type';
-import { handleLoginWithEmail } from '../../utils/FirebaseAuth';
+import AuthFormComponent from '../componets/AuthFormComponent';
+import { RootStackScreenProp } from '../navigation/type';
+import { handleLoginWithEmail } from '../utils/FirebaseAuth';
 import styles from './style/styles';
 
 const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
@@ -24,7 +24,6 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
         position: 'top',
       });
 
-      navigation.navigate('App');
     } else {
       Toast.show({
         type: 'error',
@@ -37,11 +36,11 @@ const LoginScreen = ({ navigation }: RootStackScreenProp<'Login'>) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/BoyandHeron.jpg')}
+      source={require('../../src/assets/BoyandHeron.jpg')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
-        <Image source={require('../../assets/LOGO.png')} style={styles.logo} />
+        <Image source={require('../../src/assets/LOGO.png')} style={styles.logo} />
 
         <AuthFormComponent
           formType="login"

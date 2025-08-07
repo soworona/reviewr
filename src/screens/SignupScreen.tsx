@@ -5,10 +5,11 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import AuthFormComponent from '../../componets/AuthFormComponent';
-import { RootStackScreenProp } from '../../navigation/type';
-import { handleSignUpWithEmail } from '../../utils/FirebaseAuth';
+
 import styles from './style/styles';
+import { RootStackScreenProp } from '../navigation/type';
+import { handleSignUpWithEmail } from '../utils/FirebaseAuth';
+import AuthFormComponent from '../componets/AuthFormComponent';
 
 const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
   const [username, setUsername] = useState('');
@@ -43,11 +44,11 @@ const SignupScreen = ({ navigation }: RootStackScreenProp<'Signup'>) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/If.jpg')}
+      source={require('../../src/assets/If.jpg')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
-        <Image source={require('../../assets/LOGO.png')} style={styles.logo} />
+        <Image source={require('../../src/assets/LOGO.png')} style={styles.logo} />
 
 
         <AuthFormComponent

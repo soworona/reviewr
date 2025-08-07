@@ -5,15 +5,16 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import HomeScreen from '../screens/bottom-tabs/HomeScreen';
-import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
-import SearchScreen from '../screens/bottom-tabs/SearchScreen';
-import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
+
 import { handleSignOut } from '../utils/FirebaseAuth';
 import {
   BottomTabParamList,
   BottomTabsProp
 } from './type';
+import HomeScreen from '../screens/bottom-tabs/HomeScreen';
+import SearchScreen from '../screens/bottom-tabs/SearchScreen';
+import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
+import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 

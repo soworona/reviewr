@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-const CardComponent = ({ movie }: { movie: any }) => {
-  const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+type CardComponentProps = {
+  movie: any;
+  onPress: () => void;
+}
+const CardComponent = (props: CardComponentProps) => {
+  const imageUrl = `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.onPress} >
       <FastImage source={{ uri: imageUrl }} style={styles.img} resizeMode="cover" />
       <Text style={styles.heading} numberOfLines={2} ellipsizeMode="tail">
-        {movie.title}
+        {props.movie.title}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

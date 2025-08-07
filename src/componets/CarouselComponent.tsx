@@ -4,33 +4,31 @@ import { Config } from 'react-native-config';
 import Toast from 'react-native-toast-message';
 import { AxiosInstance } from '../utils/Axios';
 import CardComponent from './CardComponent';
+import { Movie } from '../types/Movies';
 
 type CarouselComponentProps = {
   label: string;
+  onPress: (movie_id: number) => void;
+  urlPath: string;
 };
 const CarouselComponent = (props: CarouselComponentProps) => {
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
 
-  const urlMap: Record<string, string> = {
-    'New Release': 'now_playing?language=en-US&page=1',
-    'Upcoming Movies': 'upcoming?language=en-US&page=2',
-    'Ranked Movies': 'top_rated?language=en-US&page=4',
-  };
   useEffect(() => {
     console.log('api', Config.API_BEARER_TOKEN);
-    const getNowPlaying = async () => {
+    const fetchMovieData = async () => {
       try {
-        // const response = await axios.get(urlMap[props.label],
-        //   {
-        //     headers: {
-        //       accept: 'application/json',
-        //       Authorization: `Bearer ${Config.API_KEY}`,
-        //     },
-        //   },
-        // );
+        const response = await AxiosInstance.get(props.urlPath);
+        const movieList = response.data.results.map((m: any) => ({
+          id: m.id,
+          title: m.title,
+          overview: m.overview,
+          poster_path: m.poster_path,
+          backdrop_path: m.backdrop_path,
+          release_date: m.release_date,
+        }));
 
-        const response = await AxiosInstance.get(urlMap[props.label]);
-        setMovies(response.data.results);
+        setMovies(movieList);
       } catch (err) {
         Toast.show({
           type: 'error',
@@ -40,7 +38,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
       }
     };
 
-    getNowPlaying();
+    fetchMovieData();
   }, [props.label]);
 
   return (
@@ -53,7 +51,9 @@ const CarouselComponent = (props: CarouselComponentProps) => {
         keyExtractor={(item, index) =>
           item?.id ? item.id.toString() : index.toString()
         }
-        renderItem={({ item }) => <CardComponent movie={item} />}
+        renderItem={({ item }) => (
+          <CardComponent movie={item} onPress={() => props.onPress(item.id)} />
+        )}
         contentContainerStyle={styles.carousel}
       />
     </View>
