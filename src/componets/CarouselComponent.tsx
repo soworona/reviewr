@@ -7,29 +7,17 @@ import CardComponent from './CardComponent';
 
 type CarouselComponentProps = {
   label: string;
+  onPress: () => void
+  urlPath: string
 };
 const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<any[]>([]);
 
-  const urlMap: Record<string, string> = {
-    'New Release': 'now_playing?language=en-US&page=1',
-    'Upcoming Movies': 'upcoming?language=en-US&page=2',
-    'Ranked Movies': 'top_rated?language=en-US&page=4',
-  };
   useEffect(() => {
     console.log('api', Config.API_BEARER_TOKEN);
-    const getNowPlaying = async () => {
+    const fetchMovieData = async () => {
       try {
-        // const response = await axios.get(urlMap[props.label],
-        //   {
-        //     headers: {
-        //       accept: 'application/json',
-        //       Authorization: `Bearer ${Config.API_KEY}`,
-        //     },
-        //   },
-        // );
-
-        const response = await AxiosInstance.get(urlMap[props.label]);
+        const response = await AxiosInstance.get(props.urlPath);
         setMovies(response.data.results);
       } catch (err) {
         Toast.show({
@@ -40,8 +28,9 @@ const CarouselComponent = (props: CarouselComponentProps) => {
       }
     };
 
-    getNowPlaying();
+    fetchMovieData();
   }, [props.label]);
+
 
   return (
     <View style={styles.container}>
@@ -53,7 +42,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
         keyExtractor={(item, index) =>
           item?.id ? item.id.toString() : index.toString()
         }
-        renderItem={({ item }) => <CardComponent movie={item} />}
+        renderItem={({ item }) => <CardComponent movie={item} onPress={props.onPress}/>}
         contentContainerStyle={styles.carousel}
       />
     </View>
