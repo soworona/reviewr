@@ -17,7 +17,7 @@ import {
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const BottomTab = ({ navigation }: BottomTabsProp<'Home'>) => {
+const BottomTab = () => {
   const handleLogoutPress = () => {
     handleSignOut();
   };
