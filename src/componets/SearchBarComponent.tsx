@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     width: 300,
     alignItems: 'center',
     flexDirection: 'row',
-
   },
   input: {
 
