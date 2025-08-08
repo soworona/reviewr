@@ -4,6 +4,7 @@ import { AxiosInstance } from '../utils/Axios';
 import { RootStackScreenProp } from '../navigation/type';
 import { Movie } from '../types/Movies';
 import ButtonComponent from '../componets/ButtonComponent';
+import { addReviewToFirestore } from '../utils/ReviewFirestore';
 
 const AddReviewScreen = ({
   route,
@@ -26,26 +27,27 @@ const AddReviewScreen = ({
     getMovieDetails();
   }, [id]);
 
-  const handlePublishBtnPress = () => {
-
-  }
+  const handlePublishBtnPress = async () => {
+    await addReviewToFirestore({ review: review, movie_id: id });
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
       {movie && (
         <>
           <Text style={{ color: 'white' }}>{movie.title}</Text>
-          <TextInput 
-          style={styles.input}
-          placeholder='Write down your review...'
-          placeholderTextColor={'#FFFFFF80'}
-          numberOfLines={30}
-          multiline={true}
-          verticalAlign='top'
-          value={review}
-          onChangeText={setReview}
+          <TextInput
+            style={styles.input}
+            placeholder="Write down your review..."
+            placeholderTextColor={'#FFFFFF80'}
+            numberOfLines={30}
+            multiline={true}
+            verticalAlign="top"
+            value={review}
+            onChangeText={setReview}
           />
-          <ButtonComponent label='Publish' onPress={handlePublishBtnPress}/>
+          <ButtonComponent label="Publish" onPress={handlePublishBtnPress} />
         </>
       )}
     </View>
@@ -60,13 +62,13 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#39596A',
-    borderRadius:20,
-    borderWidth:1,
-    borderColor:'#FFFFFF33',
-    height:360,
-    textAlignVertical:'top',
-    paddingHorizontal:21,
-    paddingVertical:33
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#FFFFFF33',
+    height: 360,
+    textAlignVertical: 'top',
+    paddingHorizontal: 21,
+    paddingVertical: 33,
   },
 });
 
