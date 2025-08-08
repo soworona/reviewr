@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBarComponent from '../../componets/SearchBarComponent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CarouselComponent from '../../componets/CarouselComponent';
 import { BottomTabsProp } from '../../navigation/type';
 import { Movie } from '../../types/Movies';
@@ -20,6 +20,14 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   const handleMovieCardPress = (id: number) => {
     navigation.navigate('Details', { movie_id: id });
   };
+
+    useEffect(() => {
+    const trimmedQuery = query.trim();
+    if (trimmedQuery === '') {
+      setPath('');
+    }
+  }, [query]);
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchBarComponent
@@ -32,6 +40,7 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
           label={'Search result'}
           onPress={handleMovieCardPress}
           urlPath={path}
+          list
         />
       )}
       <CarouselComponent

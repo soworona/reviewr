@@ -9,7 +9,9 @@ type CarouselComponentProps = {
   label: string;
   onPress: (movie_id: number) => void;
   urlPath: string;
+  list?: boolean;
 };
+
 const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
 
@@ -28,22 +30,26 @@ const CarouselComponent = (props: CarouselComponentProps) => {
       }
     };
     loadMovieList();
-  }, [props.label]);
+  }, [props.label, props.urlPath]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{props.label}</Text>
       <FlatList
         data={movies}
-        horizontal
+        horizontal={!props.list}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) =>
           item?.id ? item.id.toString() : index.toString()
         }
         renderItem={({ item }) => (
           <CardComponent movie={item} onPress={() => props.onPress(item.id)} />
         )}
-        contentContainerStyle={styles.carousel}
+        contentContainerStyle={[
+          styles.carousel,
+          props.list && styles.verticalList,
+        ]}
       />
     </View>
   );
@@ -52,15 +58,20 @@ const CarouselComponent = (props: CarouselComponentProps) => {
 const styles = StyleSheet.create({
   container: {
     gap: 15,
+    width: '100%',
   },
   heading: {
     color: 'white',
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: 16,
   },
   carousel: {
     flexDirection: 'row',
     gap: 12,
+  },
+  verticalList: {
+    flexDirection: 'column',
+    gap: 20,
   },
 });
 
