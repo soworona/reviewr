@@ -4,17 +4,22 @@ import SearchBarComponent from '../../componets/SearchBarComponent';
 import { useState } from 'react';
 import CarouselComponent from '../../componets/CarouselComponent';
 import { BottomTabsProp } from '../../navigation/type';
+import { Movie } from '../../types/Movies';
+import { getMovieList } from '../../utils/MovieService';
 
-const SearchScreen = ({navigation}:BottomTabsProp<'Search'>) => {
+const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   const [query, setQuery] = useState('');
+  const [path, setPath] = useState('');
 
-  const handleQuerySubmit = () => {
-    console.log('query', query);
+  const handleQuerySubmit = async () => {
+    const trimmedQuery = query.trim();
+    const queryPath = `search/movie?language=en-US&page=1&query=${trimmedQuery}`;
+    setPath(queryPath);
   };
 
-  const handlMovieCardPress = (id:number) =>{
-    navigation.navigate('Details',{movie_id: id})
-  }
+  const handleMovieCardPress = (id: number) => {
+    navigation.navigate('Details', { movie_id: id });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <SearchBarComponent
@@ -22,9 +27,16 @@ const SearchScreen = ({navigation}:BottomTabsProp<'Search'>) => {
         onChangeText={setQuery}
         onSubmit={handleQuerySubmit}
       />
+      {path && (
+        <CarouselComponent
+          label={'Search result'}
+          onPress={handleMovieCardPress}
+          urlPath={path}
+        />
+      )}
       <CarouselComponent
         label={'Trending this month '}
-        onPress={handlMovieCardPress}
+        onPress={handleMovieCardPress}
         urlPath={'movie/popular?language=en-US&page=2'}
       />
     </SafeAreaView>
