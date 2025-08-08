@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Config } from 'react-native-config';
-import Toast from 'react-native-toast-message';
-import { AxiosInstance } from '../utils/Axios';
-import CardComponent from './CardComponent';
 import { Movie } from '../types/Movies';
+import { getMovieList } from '../utils/MovieService';
+import CardComponent from './CardComponent';
+import Toast from 'react-native-toast-message';
 
 type CarouselComponentProps = {
   label: string;
@@ -15,30 +14,20 @@ const CarouselComponent = (props: CarouselComponentProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    console.log('api', Config.API_BEARER_TOKEN);
-    const fetchMovieData = async () => {
+    const loadMovieList = async () => {
       try {
-        const response = await AxiosInstance.get(props.urlPath);
-        const movieList = response.data.results.map((m: any) => ({
-          id: m.id,
-          title: m.title,
-          overview: m.overview,
-          poster_path: m.poster_path,
-          backdrop_path: m.backdrop_path,
-          release_date: m.release_date,
-        }));
-
-        setMovies(movieList);
+        const path = props.urlPath;
+        const data = await getMovieList(path);
+        setMovies(data);
       } catch (err) {
         Toast.show({
           type: 'error',
-          text1: 'Try again!',
+          text1: 'Unable to load movie list!',
           text2: 'Something went wrong',
         });
       }
     };
-
-    fetchMovieData();
+    loadMovieList();
   }, [props.label]);
 
   return (
