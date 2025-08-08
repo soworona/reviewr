@@ -17,3 +17,14 @@ export async function getMovieList (urlPath: string) {
     throw error;
   }
 };
+
+export async function addToFavourites (movie_id: number, isFavourite:boolean) {
+  try{
+    const response = await AxiosInstance.post(`account/22105497/favorite`,{
+    media_type: 'movie',
+    media_id: movie_id,
+    favorite: isFavourite});
+  } catch (error) {
+    throw error;
+  }
+}
