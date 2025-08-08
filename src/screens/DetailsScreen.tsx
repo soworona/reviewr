@@ -20,7 +20,7 @@ const DetailsScreen = ({
   useEffect(() => {
     const getMovieDetails = async () => {
       try {
-        const response = await AxiosInstance.get(`${id}?language=en-US`);
+        const response = await AxiosInstance.get(`movie/${id}?language=en-US`);
         setMovie(response.data);
         console.log('details', response.data);
       } catch (error) {
