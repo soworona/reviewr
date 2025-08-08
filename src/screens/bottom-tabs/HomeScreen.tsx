@@ -20,9 +20,9 @@ const HomeScreen = ({navigation}: BottomTabsProp<'Home'>) => {
         </Text>
       </View>
 
-      <CarouselComponent label="New Release"  urlPath='now_playing?language=en-US&page=1' onPress={handleCardPress}/>
-      <CarouselComponent label="Upcoming Movies" urlPath='upcoming?language=en-US&page=2' onPress={handleCardPress}/>
-      <CarouselComponent label="Ranked Movies" urlPath='top_rated?language=en-US&page=5' onPress={handleCardPress}/>
+      <CarouselComponent label="New Release"  urlPath='movie/now_playing?language=en-US&page=1' onPress={handleCardPress}/>
+      <CarouselComponent label="Upcoming Movies" urlPath='movie/upcoming?language=en-US&page=2' onPress={handleCardPress}/>
+      <CarouselComponent label="Ranked Movies" urlPath='movie/top_rated?language=en-US&page=5' onPress={handleCardPress}/>
     </ScrollView>
   );
 };

@@ -17,7 +17,7 @@ const AddReviewScreen = ({
   useEffect(() => {
     const getMovieDetails = async () => {
       try {
-        const response = await AxiosInstance.get(`${id}?language=en-US`);
+        const response = await AxiosInstance.get(`/movie/${id}?language=en-US`);
         setMovie(response.data);
       } catch (error) {
         console.error('Failed to fetch movie details', error);

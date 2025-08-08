@@ -1,16 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { handleSignOut } from '../utils/FirebaseAuth';
-import {
-  BottomTabParamList,
-  BottomTabsProp
-} from './type';
+import { BottomTabParamList, BottomTabsProp } from './type';
 import HomeScreen from '../screens/bottom-tabs/HomeScreen';
 import SearchScreen from '../screens/bottom-tabs/SearchScreen';
 import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
@@ -59,30 +51,77 @@ const BottomTab = () => {
           backgroundColor: '#001C29',
           borderTopWidth: 0,
         },
-
-        headerStyle: {
-          backgroundColor: '#002335',
-          elevation: 0,
-          borderBottomWidth: 0,
+        tabBarLabelStyle: {
+          marginTop: 5,
         },
-        headerTitle: '',
-        headerLeft: () => {
-          if (route.name === 'Home') {
+        tabBarInactiveTintColor: 'white',
+        tabBarActiveTintColor: '#FFB703',
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={() => ({
+          headerStyle: {
+            backgroundColor: '#002335',
+            elevation: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitle: '',
+          headerLeft: () => {
             return (
               <Image
                 source={require('../../src/assets/LOGO.png')}
                 style={{ width: 185, height: 45, resizeMode: 'contain' }}
               />
             );
-          }
-          return (
-            <Text style={{ color: 'white', fontSize: 18, marginLeft: 20 }}>
-              {route.name}
-            </Text>
-          );
-        },
-        headerRight: () => {
-          if (route.name === 'Profile') {
+          },
+        })}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Wishlist"
+        component={WishlistScreen}
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: '#002335',
+            elevation: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitle: '',
+          headerLeft: () => {
+            return (
+              <Text style={{ color: 'white', fontSize: 18, marginLeft: 20 }}>
+                {route.name}
+              </Text>
+            );
+          },
+        })}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: '#002335',
+            elevation: 0,
+            borderBottomWidth: 0,
+          },
+          headerTitle: '',
+          headerLeft: () => {
+            return (
+              <Text style={{ color: 'white', fontSize: 18, marginLeft: 20 }}>
+                {route.name}
+              </Text>
+            );
+          },
+          headerRight: () => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -92,19 +131,9 @@ const BottomTab = () => {
                 <Text style={styles.logoutBtn}>Logout</Text>
               </TouchableOpacity>
             );
-          }
-        },
-        tabBarLabelStyle: {
-          marginTop: 5,
-        },
-        tabBarInactiveTintColor: 'white',
-        tabBarActiveTintColor: '#FFB703',
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Wishlist" component={WishlistScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+          },
+        })}
+      />
     </Tab.Navigator>
   );
 };
