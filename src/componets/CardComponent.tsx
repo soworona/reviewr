@@ -2,18 +2,20 @@ import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'reac
 import FastImage from 'react-native-fast-image';
 import { Movie } from '../types/Movies';
 import formatDate from '../utils/FormatDate';
+import { useState } from 'react';
 
 type CardComponentProps = {
   movie: Movie;
   onPress: () => void;
   showReleaseDate?: boolean;
-  showRating?: boolean
+  showRating?: boolean;
+  searchView?: boolean;
 }
 const CardComponent = (props: CardComponentProps) => {
   const imageUrl = `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`;
-  console.log("Movie data from card com:", props.movie);
+
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress} >
+    <TouchableOpacity style={[styles.container, { width: props.searchView ? 224 : 120}]} onPress={props.onPress} >
       <FastImage source={{ uri: imageUrl }} style={styles.img} resizeMode="cover" />
       <Text style={styles.heading} numberOfLines={1} ellipsizeMode="tail">
         {props.movie.title}
@@ -32,13 +34,13 @@ const CardComponent = (props: CardComponentProps) => {
 const styles = StyleSheet.create({
   container: {
     gap: 8,
-    maxWidth: 120,
+    // maxWidth: 120,
     // maxHeight: 213,
   },
   img: {
-    width: 120,
     height: 160,
     borderRadius: 8,
+    objectFit:'contain'
   },
   heading: {
     color: '#E0E0E0',
