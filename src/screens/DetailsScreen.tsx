@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../componets/ButtonComponent';
 import { RootStackScreenProp } from '../navigation/type';
@@ -14,8 +20,6 @@ const DetailsScreen = ({
   const id = route.params.movie_id;
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
-
-
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -46,15 +50,26 @@ const DetailsScreen = ({
       {movie && (
         <>
           <View style={styles.header}>
-            <FastImage   source={{ uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}` }} style={{ width: '100%', height: 200, borderRadius: 10, marginBottom: 10 }}
-              resizeMode={FastImage.resizeMode.contain}/>
+            <FastImage
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
+              }}
+              style={{
+                width: '100%',
+                height: 200,
+                borderRadius: 10,
+                marginBottom: 10,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
               {movie.title}
-              
             </Text>
             <Text>{movie.overview}</Text>
           </View>
-
+          <TouchableOpacity style={{ borderWidth: 1 , backgroundColor:'yellow'}}>
+            <Text style={styles.txt}> Add to wishlist</Text>
+          </TouchableOpacity>
           <ButtonComponent label="Add review" onPress={handleAddReviewPress} />
 
           <Text style={styles.txt}>Your reviews</Text>
@@ -86,14 +101,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#052433ff',
     paddingHorizontal: 16,
-    paddingTop:45
+    paddingTop: 45,
   },
   header: {
     backgroundColor: '#5F6F78',
     padding: 16,
     borderRadius: 14,
     marginBottom: 16,
-    
   },
   txt: {
     color: 'white',
