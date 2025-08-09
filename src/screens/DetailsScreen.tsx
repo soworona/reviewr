@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -23,26 +24,38 @@ const DetailsScreen = ({
   const id = route.params.movie_id;
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getMovieDetails = async () => {
+      setLoading(true);
       try {
         const response = await AxiosInstance.get(`movie/${id}?language=en-US`);
         setMovie(response.data);
       } catch (error) {
         console.error('Failed to fetch movie details', error);
       }
+      setLoading(false);
     };
 
     const getReviews = async () => {
+      setLoading(true);
       const reviewsList = await getAllReviews(id);
       setReview(reviewsList);
+      setLoading(false);
     };
 
     getMovieDetails();
     getReviews();
   }, [id]);
 
+    if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#ffffffac" />
+      </View>
+    );
+  }
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview', { movie_id: id });
   };
