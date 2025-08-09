@@ -7,6 +7,7 @@ import { Movie } from '../types/Movies';
 import { AxiosInstance } from '../utils/Axios';
 import { getAllReviews } from '../utils/ReviewFirestore';
 import formatDate from '../utils/FormatDate';
+import SmallButtonComponent from '../componets/SmallButtonComponent';
 
 const DetailsScreen = ({
   route,
@@ -89,7 +90,8 @@ const DetailsScreen = ({
                 <Image
                   source={require('../../src/assets/icons/Date.png')}
                   style={styles.headerIcon}
-                />{formatDate(movie.release_date)}
+                />
+                {formatDate(movie.release_date)}
               </Text>
               <Text style={styles.headerSubTitle}>
                 <Image
@@ -99,6 +101,10 @@ const DetailsScreen = ({
                 Not watched
               </Text>
             </View>
+          </View>
+          <View style={styles.btnGrp}>
+            <SmallButtonComponent label="Watch trailer" utube />
+            <SmallButtonComponent label="Add to wishlist" watchlist />
           </View>
           <Text style={styles.overview}>{movie.overview}</Text>
 
@@ -115,9 +121,7 @@ const DetailsScreen = ({
               </View>
             )}
             ListEmptyComponent={
-              <Text style={{ color: 'white' }}>
-                No reviews yet.
-              </Text>
+              <Text style={{ color: 'white' }}>No reviews yet.</Text>
             }
             contentContainerStyle={{ paddingBottom: 20 }}
           />
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#052433ff',
     paddingHorizontal: 16,
     paddingTop: 45,
-    gap:16
+    gap: 16,
   },
   header: {
     backgroundColor: '#4a5e68ff',
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#817f8d33',
     paddingVertical: 8,
-    elevation:5
+    elevation: 5,
   },
   banner: {
     width: '100%',
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
   headerInfo: {
     left: 125,
     width: 205,
-    gap: 4
+    gap: 4,
   },
   headerTitle: {
     fontSize: 16,
@@ -186,39 +190,44 @@ const styles = StyleSheet.create({
     width: 12,
     objectFit: 'contain',
   },
-  headerBottom:{
-    flexDirection:'row',
-    justifyContent:'center',
-    gap:20,
-    marginTop:10
+  headerBottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginTop: 10,
   },
-  overview:{
-    color:"#F5F5F5",
-    fontSize:14
+  btnGrp: {
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+  },
+  overview: {
+    color: '#F5F5F5',
+    fontSize: 14,
   },
   txt: {
     color: 'white',
     fontSize: 18,
-    fontWeight:600
+    fontWeight: 600,
   },
   reviewItem: {
     backgroundColor: '#37505D',
     padding: 12,
     borderRadius: 14,
     marginBottom: 10,
-    gap:10,
-    borderWidth:1,
-    borderColor:'#ffffff1a',
-    elevation:2
+    gap: 10,
+    borderWidth: 1,
+    borderColor: '#ffffff1a',
+    elevation: 2,
   },
   reviewUser: {
     color: '#ffffff80',
     fontWeight: 300,
-    fontSize:11
+    fontSize: 11,
   },
   reviewContent: {
     color: '#F5F5F5',
-    fontSize:14
+    fontSize: 14,
   },
 });
 
