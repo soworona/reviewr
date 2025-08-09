@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../componets/ButtonComponent';
 import { RootStackScreenProp } from '../navigation/type';
@@ -52,6 +59,16 @@ const DetailsScreen = ({
               style={styles.banner}
               resizeMode="cover"
             />
+            <TouchableOpacity
+              onPress={navigation.goBack}
+              style={{ position: 'absolute', top:10}}
+              
+            >
+              <Image
+                source={require('../../src/assets/icons/Back.png')}
+                style={{ height: 25, objectFit: 'contain' }}
+              />
+            </TouchableOpacity>
             <View style={styles.posterContainer}>
               <FastImage
                 source={{
