@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Movie } from '../types/Movies';
+import formatDate from '../utils/FormatDate';
 
 type CardComponentProps = {
   movie: Movie;
@@ -18,7 +19,7 @@ const CardComponent = (props: CardComponentProps) => {
         {props.movie.title}
       </Text >
       {props.showReleaseDate && 
-      <Text style={styles.subheading}>{props.movie.release_date}</Text>}
+      <Text style={styles.subheading}>{formatDate(props.movie.release_date)}</Text>}
       {props.showRating && 
       <Text style={styles.subheading}>
         <Image source={require('../../src/assets/icons/Star.png')}  style={styles.icon}/>

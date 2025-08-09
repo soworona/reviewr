@@ -21,8 +21,8 @@ const HomeScreen = ({navigation}: BottomTabsProp<'Home'>) => {
       </View>
 
       <CarouselComponent label="New Release"  urlPath='movie/now_playing?language=en-US&page=1' onPress={handleCardPress}/>
-      <CarouselComponent label="Upcoming Movies" urlPath='movie/upcoming?language=en-US&page=2' onPress={handleCardPress}/>
-      <CarouselComponent label="Ranked Movies" urlPath='movie/top_rated?language=en-US&page=5' onPress={handleCardPress}/>
+      <CarouselComponent label="Upcoming Movies" urlPath='movie/upcoming?language=en-US&page=2' onPress={handleCardPress} showReleaseDate/>
+      <CarouselComponent label="Ranked Movies" urlPath='movie/top_rated?language=en-US&page=5' onPress={handleCardPress} showRating/>
     </ScrollView>
   );
 };
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#002335',
     paddingVertical: 21,
     paddingHorizontal: 13,
-    gap: 25,
+    gap: 20,
   },
   heading: {
     color: 'white',
