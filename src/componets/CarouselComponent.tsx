@@ -10,6 +10,8 @@ type CarouselComponentProps = {
   onPress: (movie_id: number) => void;
   urlPath: string;
   list?: boolean;
+  showReleaseDate?: boolean;
+  showRating?: boolean
 };
 
 const CarouselComponent = (props: CarouselComponentProps) => {
@@ -44,7 +46,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
           item?.id ? item.id.toString() : index.toString()
         }
         renderItem={({ item }) => (
-          <CardComponent movie={item} onPress={() => props.onPress(item.id)} />
+          <CardComponent movie={item} onPress={() => props.onPress(item.id)} showReleaseDate={props.showReleaseDate} showRating={props.showRating} />
         )}
         contentContainerStyle={[
           styles.carousel,
