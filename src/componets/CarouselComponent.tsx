@@ -11,7 +11,8 @@ type CarouselComponentProps = {
   urlPath: string;
   list?: boolean;
   showReleaseDate?: boolean;
-  showRating?: boolean
+  showRating?: boolean;
+  searchView?:boolean;
 };
 
 const CarouselComponent = (props: CarouselComponentProps) => {
@@ -46,7 +47,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
           item?.id ? item.id.toString() : index.toString()
         }
         renderItem={({ item }) => (
-          <CardComponent movie={item} onPress={() => props.onPress(item.id)} showReleaseDate={props.showReleaseDate} showRating={props.showRating} />
+          <CardComponent movie={item} onPress={() => props.onPress(item.id)} showReleaseDate={props.showReleaseDate} showRating={props.showRating} searchView={props.searchView} listView={props.list}/>
         )}
         contentContainerStyle={[
           styles.carousel,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   verticalList: {
     flexDirection: 'column',
-    gap: 20,
+    gap: 0,
   },
 });
 
