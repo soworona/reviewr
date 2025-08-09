@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../componets/ButtonComponent';
 import { RootStackScreenProp } from '../navigation/type';
 import { Movie } from '../types/Movies';
 import { AxiosInstance } from '../utils/Axios';
 import { getAllReviews } from '../utils/ReviewFirestore';
+import formatDate from '../utils/FormatDate';
+import SmallButtonComponent from '../componets/SmallButtonComponent';
 
 const DetailsScreen = ({
   route,
@@ -15,14 +17,11 @@ const DetailsScreen = ({
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
 
-
-
   useEffect(() => {
     const getMovieDetails = async () => {
       try {
         const response = await AxiosInstance.get(`movie/${id}?language=en-US`);
         setMovie(response.data);
-        console.log('details', response.data);
       } catch (error) {
         console.error('Failed to fetch movie details', error);
       }
@@ -46,32 +45,83 @@ const DetailsScreen = ({
       {movie && (
         <>
           <View style={styles.header}>
-            <FastImage   source={{ uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}` }} style={{ width: '100%', height: 200, borderRadius: 10, marginBottom: 10 }}
-              resizeMode={FastImage.resizeMode.contain}/>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-              {movie.title}
-              
-            </Text>
-            <Text>{movie.overview}</Text>
+            <FastImage
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
+              }}
+              style={styles.banner}
+              resizeMode="cover"
+            />
+            <View style={styles.posterContainer}>
+              <FastImage
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+                }}
+                style={styles.poster}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={styles.headerInfo}>
+              <Text style={styles.headerTitle}>{movie.title}</Text>
+              <Text style={styles.headerSubTitle}>
+                <Image
+                  source={require('../../src/assets/icons/Director.png')}
+                  style={styles.headerIcon}
+                />{' '}
+                Directed by Alfonso Cuarón
+              </Text>
+              <Text style={styles.headerSubTitle}>
+                <Image
+                  source={require('../../src/assets/icons/Person.png')}
+                  style={styles.headerIcon}
+                />{' '}
+                Warner Bros. Pictures
+              </Text>
+            </View>
+            <View style={styles.headerBottom}>
+              <Text style={styles.headerSubTitle}>
+                <Image
+                  source={require('../../src/assets/icons/Time.png')}
+                  style={styles.headerIcon}
+                />{' '}
+                2hr 30 min
+              </Text>
+              <Text style={styles.headerSubTitle}>
+                <Image
+                  source={require('../../src/assets/icons/Date.png')}
+                  style={styles.headerIcon}
+                />
+                {formatDate(movie.release_date)}
+              </Text>
+              <Text style={styles.headerSubTitle}>
+                <Image
+                  source={require('../../src/assets/icons/Watchlist.png')}
+                  style={styles.headerIcon}
+                />{' '}
+                Not watched
+              </Text>
+            </View>
           </View>
+          <View style={styles.btnGrp}>
+            <SmallButtonComponent label="Watch trailer" utube />
+            <SmallButtonComponent label="Add to wishlist" watchlist />
+          </View>
+          <Text style={styles.overview}>{movie.overview}</Text>
 
           <ButtonComponent label="Add review" onPress={handleAddReviewPress} />
 
-          <Text style={styles.txt}>Your reviews</Text>
-
+          <Text style={styles.txt}>Reviews</Text>
           <FlatList
             data={reviews}
             keyExtractor={(item, index) => item.id || index.toString()}
             renderItem={({ item }: { item: any }) => (
               <View style={styles.reviewItem}>
-                <Text style={styles.reviewUser}>{item.user_id}</Text>
+                <Text style={styles.reviewUser}>Review by {item.user_id}</Text>
                 <Text style={styles.reviewContent}>{item.review}</Text>
               </View>
             )}
             ListEmptyComponent={
-              <Text style={{ color: 'white', marginTop: 10 }}>
-                No reviews yet.
-              </Text>
+              <Text style={{ color: 'white' }}>No reviews yet.</Text>
             }
             contentContainerStyle={{ paddingBottom: 20 }}
           />
@@ -86,34 +136,98 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#052433ff',
     paddingHorizontal: 16,
-    paddingTop:45
+    paddingTop: 45,
+    gap: 16,
   },
   header: {
-    backgroundColor: '#5F6F78',
-    padding: 16,
+    backgroundColor: '#4a5e68ff',
+    paddingHorizontal: 8,
     borderRadius: 14,
-    marginBottom: 16,
-    
+    // marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#817f8d33',
+    paddingVertical: 8,
+    elevation: 5,
+  },
+  banner: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 10,
+    elevation: 6,
+  },
+  posterContainer: {
+    position: 'absolute',
+    height: 163,
+    width: 106,
+    elevation: 6,
+    left: 20,
+    top: 50,
+  },
+  poster: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 14,
+  },
+  headerInfo: {
+    left: 125,
+    width: 205,
+    gap: 4,
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: 'white',
+  },
+  headerSubTitle: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#ffffffbf',
+  },
+  headerIcon: {
+    height: 10,
+    width: 12,
+    objectFit: 'contain',
+  },
+  headerBottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginTop: 10,
+  },
+  btnGrp: {
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+  },
+  overview: {
+    color: '#F5F5F5',
+    fontSize: 14,
   },
   txt: {
     color: 'white',
     fontSize: 18,
-    marginTop: 16,
-    marginBottom: 8,
+    fontWeight: 600,
   },
   reviewItem: {
-    backgroundColor: '#1E2A38',
+    backgroundColor: '#37505D',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 14,
     marginBottom: 10,
+    gap: 10,
+    borderWidth: 1,
+    borderColor: '#ffffff1a',
+    elevation: 2,
   },
   reviewUser: {
-    color: '#a0c4ff',
-    fontWeight: 'bold',
-    marginBottom: 4,
+    color: '#ffffff80',
+    fontWeight: 300,
+    fontSize: 11,
   },
   reviewContent: {
-    color: 'white',
+    color: '#F5F5F5',
+    fontSize: 14,
   },
 });
 
