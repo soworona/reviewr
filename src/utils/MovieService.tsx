@@ -19,12 +19,14 @@ export async function getMovieList (urlPath: string) {
   }
 };
 
-export async function addToFavourites (movie_id: number, isFavourite:boolean) {
+export async function addToWatchList (movie_id: number, isInWatchList:boolean) {
   try{
-    const response = await AxiosInstance.post(`account/22105497/favorite`,{
+    const response =  await AxiosInstance.post(`account/22105497/watchlist`,{
     media_type: 'movie',
     media_id: movie_id,
-    favorite: isFavourite});
+    watchlist: isInWatchList});
+    
+    console.log("wathc list response", response.data);
   } catch (error) {
     throw error;
   }
