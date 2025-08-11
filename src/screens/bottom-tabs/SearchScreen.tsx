@@ -18,17 +18,15 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   const [loading, setLoading] = useState(false);
 
   const handleQuerySubmit = (searchString: string) => {
-    if (searchString.length < 2) {
-      setPath('');
-      return;
-    }
     setLoading(true);
     const queryPath = `search/movie?language=en-US&page=1&query=${searchString.trim()}`;
     setPath(queryPath);
     setLoading(false);
   };
 
-  const debouncedFetch = useCallback(debounce(handleQuerySubmit(), 1000), []);
+  const debouncedFetch = useCallback(debounce((searchString: string) => {
+      handleQuerySubmit(searchString);
+    }, 500), []);
 
     const handleSearchChange = (searchString: string) => {
     setQuery(searchString);
@@ -38,17 +36,6 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   const handleMovieCardPress = (id: number) => {
     navigation.navigate('Details', { movie_id: id });
   };
-
-  useEffect(() => {
-    const trimmedQuery = query.trim();
-    console.log('serach bar query:', trimmedQuery);
-
-    const delayDebounce = setTimeout(() => {
-      handleQuerySubmit(trimmedQuery);
-    }, 500);
-
-    return () => clearTimeout(delayDebounce);
-  }, [query]);
 
   if (loading) {
     return (
@@ -67,7 +54,7 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
     <SafeAreaView style={styles.container}>
       <SearchBarComponent
         value={query}
-        onChangeText={() =>handleSearchChange(query)}
+        onChangeText={handleSearchChange}
         onSubmit={() => handleQuerySubmit(query)}
       />
       {path ? (
