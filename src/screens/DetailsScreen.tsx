@@ -24,7 +24,7 @@ const DetailsScreen = ({
   const id = route.params.movie_id;
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getMovieDetails = async () => {
