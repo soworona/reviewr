@@ -18,3 +18,17 @@ export async function getMovieList (urlPath: string) {
     throw error;
   }
 };
+
+export async function addToWatchList (movie_id: number, isInWatchList:boolean) {
+  try{
+    const response =  await AxiosInstance.post(`account/22105497/watchlist`,{
+    media_type: 'movie',
+    media_id: movie_id,
+    watchlist: isInWatchList});
+    
+    // console.log("wathc list response", response.data);
+  } catch (error) {
+    throw error;
+  }
+}
+
