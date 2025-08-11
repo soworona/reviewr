@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,6 +16,8 @@ import { AxiosInstance } from '../utils/Axios';
 import { getAllReviews } from '../utils/ReviewFirestore';
 import formatDate from '../utils/FormatDate';
 import SmallButtonComponent from '../componets/SmallButtonComponent';
+import Toast from 'react-native-toast-message';
+import { addToWatchList } from '../utils/MovieService';
 
 const DetailsScreen = ({
   route,
@@ -24,7 +26,8 @@ const DetailsScreen = ({
   const id = route.params.movie_id;
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -49,16 +52,35 @@ const DetailsScreen = ({
     getReviews();
   }, [id]);
 
-    if (loading) {
+  if (loading) {
     return (
-      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+      <View
+        style={[
+          styles.container,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
         <ActivityIndicator size="large" color="#ffffffac" />
       </View>
     );
   }
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview', { movie_id: id });
-  };
+  }
+
+
+  const handleToggleWishlistPress = async() => {
+    const addToWishList = await addToWatchList(id, !inWishlist)
+
+      Toast.show({
+        type: 'success',
+        text1: 'Added to wishlist',
+        text2: 'Your wishlist has been updated.',
+      });
+      
+    
+    setInWishlist(!inWishlist);
+  }
 
   return (
     <View style={styles.container}>
@@ -74,8 +96,7 @@ const DetailsScreen = ({
             />
             <TouchableOpacity
               onPress={navigation.goBack}
-              style={{ position: 'absolute', top:10}}
-              
+              style={{ position: 'absolute', top: 10 }}
             >
               <Image
                 source={require('../../src/assets/icons/Back.png')}
@@ -134,7 +155,11 @@ const DetailsScreen = ({
           </View>
           <View style={styles.btnGrp}>
             <SmallButtonComponent label="Watch trailer" utube />
-            <SmallButtonComponent label="Add to wishlist" watchlist />
+            <SmallButtonComponent
+              label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              onPress={handleToggleWishlistPress}
+              watchlist
+            />
           </View>
           <Text style={styles.overview}>{movie.overview}</Text>
 
