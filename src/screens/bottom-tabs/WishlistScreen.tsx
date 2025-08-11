@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Movie } from '../../types/Movies';
 import { getMovieList } from '../../utils/MovieService';
 import FastImage from 'react-native-fast-image';
@@ -21,13 +21,13 @@ const WishlistScreen = ({navigation} :BottomTabsProp<'Wishlist'>) => {
 
   const renderMovieItem = ({ item }: { item: Movie }) => {
     return (
-      <TouchableOpacity style={styles.img} onPress={() => navigation.navigate('Details', {movie_id:item.id})}>
+      <View style={styles.img}>
         <FastImage
           source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
           style={{ width: '100%', height: '100%' }}
           resizeMode="contain"
         />
-      </TouchableOpacity>
+      </View>
     );
   };
 
