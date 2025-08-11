@@ -57,7 +57,7 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
         onChangeText={handleSearchChange}
         onSubmit={() => handleQuerySubmit(query)}
       />
-      {path ? (
+      {query !== '' ? (
         <CarouselComponent
           label="Search result"
           onPress={handleMovieCardPress}
