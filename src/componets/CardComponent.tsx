@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Movie } from '../types/Movies';
 import formatDate from '../utils/FormatDate';
+import { memo } from 'react';
 
 type CardComponentProps = {
   movie: Movie;
@@ -96,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardComponent;
+export default memo(CardComponent);
