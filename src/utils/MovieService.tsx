@@ -26,8 +26,9 @@ export async function addToWatchList (movie_id: number, isInWatchList:boolean) {
     media_id: movie_id,
     watchlist: isInWatchList});
     
-    console.log("wathc list response", response.data);
+    // console.log("wathc list response", response.data);
   } catch (error) {
     throw error;
   }
 }
+

@@ -24,7 +24,7 @@ const CardComponent = (props: CardComponentProps) => {
             {props.movie.title}
           </Text>
           <Text style={{color:'#ffffff99'}}
-          numberOfLines={3} ellipsizeMode=''>{props.movie.overview}</Text>
+          numberOfLines={3} ellipsizeMode='tail'>{props.movie.overview}</Text>
         </View>
       </TouchableOpacity>
     );
