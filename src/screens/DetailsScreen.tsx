@@ -29,6 +29,7 @@ const DetailsScreen = ({
   const [loading, setLoading] = useState(true);
   const [inWishlist, setInWishlist] = useState(false);
 
+
   useEffect(() => {
     const getMovieDetails = async () => {
       setLoading(true);

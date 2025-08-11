@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Movie } from '../types/Movies';
 import formatDate from '../utils/FormatDate';
+import { memo } from 'react';
 
 type CardComponentProps = {
   movie: Movie;
@@ -20,11 +21,15 @@ const CardComponent = (props: CardComponentProps) => {
       <TouchableOpacity style={styles.listContainer} onPress={props.onPress}>
         <FastImage source={{ uri: imageUrl }} style={styles.listImage} resizeMode="cover" />
         <View style={styles.listTextContainer}>
-          <Text style={styles.heading} numberOfLines={1} ellipsizeMode="tail">
+          <Text style={styles.heading}>
             {props.movie.title}
           </Text>
-          <Text style={{color:'#ffffff99'}}
-          numberOfLines={3} ellipsizeMode='tail'>{props.movie.overview}</Text>
+          <Text style={{color:'#ffffff99'}}>{formatDate(props.movie.release_date)}</Text>
+          <Text style={styles.subheading}>
+          <Image source={require('../../src/assets/icons/Star.png')} style={styles.icon} />
+          {' '}
+          {Math.round((props.movie.vote_average / 2) * 10) / 10}
+        </Text>
         </View>
       </TouchableOpacity>
     );
@@ -77,10 +82,12 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     paddingVertical: 8,
+    borderBottomColor:'#ffffff2f',
+    borderBottomWidth:1
   },
   listImage: {
-    width: 100,
-    height: 140,
+    width: 80,
+    height: 120,
     borderRadius: 8,
   },
   listTextContainer: {
@@ -90,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardComponent;
+export default memo(CardComponent);
