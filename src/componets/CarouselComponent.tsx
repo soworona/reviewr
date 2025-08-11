@@ -38,7 +38,9 @@ const CarouselComponent = (props: CarouselComponentProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{props.label}</Text>
-      <FlatList
+      {movies.length > 0? (
+
+        <FlatList
         data={movies}
         horizontal={!props.list}
         showsHorizontalScrollIndicator={false}
@@ -53,7 +55,10 @@ const CarouselComponent = (props: CarouselComponentProps) => {
           styles.carousel,
           props.list && styles.verticalList,
         ]}
-      />
+        />
+      ): (
+        <Text style={{color:'white'}}>No results found.</Text>
+      )}
     </View>
   );
 };
