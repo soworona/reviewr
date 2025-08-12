@@ -22,7 +22,7 @@ const BottomTab = () => {
 
   useEffect(() => {
     dispatch(fetchWishlist());
-    console.log("fetch wishlist dispatched")
+    // console.log("fetch wishlist dispatched")
   }, [dispatch]);
 
   return (

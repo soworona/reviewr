@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -13,12 +13,16 @@ import ButtonComponent from '../componets/ButtonComponent';
 import SmallButtonComponent from '../componets/SmallButtonComponent';
 import { RootStackScreenProp } from '../navigation/type';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { addToWishlist, removeFromWishlist } from '../redux/slices/wishlistSlice';
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from '../redux/slices/wishlistSlice';
 import { Movie } from '../types/Movies';
 import { AxiosInstance } from '../utils/Axios';
 import formatDate from '../utils/FormatDate';
 import { addOrRemoveWishList } from '../utils/MovieService';
 import { getAllReviews } from '../utils/ReviewFirestore';
+import LoadingSpinnerComponent from './bottom-tabs/LoadingSpinnerComponent';
 
 const DetailsScreen = ({
   route,
@@ -28,12 +32,21 @@ const DetailsScreen = ({
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const isInWishlist = useAppSelector(state =>
-    state.wishlist.movieIds.includes(id),
-  );
-  const dispatch = useAppDispatch();
 
-  console.log('in wishlist state:', isInWishlist);
+  const dispatch = useAppDispatch();
+  const movieIds = useAppSelector(state => state.wishlist.movieIds);
+  const status = useAppSelector(state => state.wishlist.status);
+  const isInWishlist = movieIds.includes(id);
+
+  console.log('isInWishlist:', isInWishlist);
+
+  if (status === 'pending') {
+    return <LoadingSpinnerComponent />;
+  }
+
+  if (status === 'failed') {
+    return <Text>Error</Text>;
+  }
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -59,31 +72,21 @@ const DetailsScreen = ({
   }, [id]);
 
   if (loading) {
-    return (
-      <View
-        style={[
-          styles.container,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-      >
-        <ActivityIndicator size="large" color="#ffffffac" />
-      </View>
-    );
+    return <LoadingSpinnerComponent />;
   }
+
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview', { movie_id: id });
   };
 
   const handleToggleWishlistPress = async () => {
-    if(!isInWishlist){
-      dispatch(addToWishlist({ movieId: id}))
-      await addOrRemoveWishList(id, true)
-      
-  }else{
-    dispatch(removeFromWishlist({ movieId: id}))
-    await addOrRemoveWishList(id, false)
-
-   }
+    if (!isInWishlist) {
+      dispatch(addToWishlist({ movieId: id }));
+      await addOrRemoveWishList(id, true);
+    } else {
+      dispatch(removeFromWishlist({ movieId: id }));
+      await addOrRemoveWishList(id, false);
+    }
   };
 
   return (
