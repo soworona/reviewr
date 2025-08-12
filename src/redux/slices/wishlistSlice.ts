@@ -3,7 +3,9 @@ import Toast from 'react-native-toast-message';
 import { getWishlist } from '../../utils/MovieService';
 
 type wishlistState = {
-  moviesIds: number[];
+  movieIds: number[];
+  status: 'idle' | 'pending' | 'succeeded' | 'failed'
+    error: string | null
 };
 
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', 
@@ -14,7 +16,9 @@ export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist',
 )
 
 const initialState: wishlistState = {
-  moviesIds: [],
+  movieIds: [],
+  status:'idle',
+  error:null
 };
 
 const wishlistSlice = createSlice({
@@ -22,7 +26,7 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action: PayloadAction<{ movieId: number }>) => {
-      state.moviesIds.push(action.payload.movieId);
+      state.movieIds.push(action.payload.movieId);
       Toast.show({
         type: 'success',
         text1: 'Added to wishlist',
@@ -30,7 +34,7 @@ const wishlistSlice = createSlice({
       });
     },
     removeFromWishlist: (state, action: PayloadAction<{ movieId: number }>) => {
-      state.moviesIds = state.moviesIds.filter(
+      state.movieIds = state.movieIds.filter(
         id => id !== action.payload.movieId,
       );
       Toast.show({
@@ -39,6 +43,21 @@ const wishlistSlice = createSlice({
         text2: 'Your wishlist has been updated.',
       });
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchWishlist.pending, state => {
+        state.status = 'pending';
+        state.error = null;
+      })
+      .addCase(fetchWishlist.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.movieIds = action.payload;
+      })
+      .addCase(fetchWishlist.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      });
   },
 });
 
