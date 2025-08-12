@@ -1,9 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Toast from 'react-native-toast-message';
+import { getWishlist } from '../../utils/MovieService';
 
 type wishlistState = {
   moviesIds: number[];
 };
+
+export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', 
+    async () => { 
+        const wishlist = await getWishlist();
+        return wishlist
+    }
+)
 
 const initialState: wishlistState = {
   moviesIds: [],
@@ -33,6 +41,8 @@ const wishlistSlice = createSlice({
     },
   },
 });
+
+
 
 export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
 
