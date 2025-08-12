@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -10,16 +10,15 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../componets/ButtonComponent';
-import { RootStackScreenProp } from '../navigation/type';
-import { Movie } from '../types/Movies';
-import { AxiosInstance } from '../utils/Axios';
-import { getAllReviews } from '../utils/ReviewFirestore';
-import formatDate from '../utils/FormatDate';
 import SmallButtonComponent from '../componets/SmallButtonComponent';
-import Toast from 'react-native-toast-message';
-import { addToWatchList } from '../utils/MovieService';
+import { RootStackScreenProp } from '../navigation/type';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addToWishlist, removeFromWishlist } from '../redux/slices/wishlistSlice';
+import { Movie } from '../types/Movies';
+import { AxiosInstance } from '../utils/Axios';
+import formatDate from '../utils/FormatDate';
+import { addOrRemoveWishList } from '../utils/MovieService';
+import { getAllReviews } from '../utils/ReviewFirestore';
 
 const DetailsScreen = ({
   route,
@@ -75,12 +74,15 @@ const DetailsScreen = ({
     navigation.navigate('AddReview', { movie_id: id });
   };
 
-  const handleToggleWishlistPress = () => {
-    // const addToWishList = await addToWatchList(id, !inWishlist)
-   if(isInWishlist){
-    dispatch(addToWishlist({ movieId: id}))
+  const handleToggleWishlistPress = async () => {
+    if(!isInWishlist){
+      dispatch(addToWishlist({ movieId: id}))
+      await addOrRemoveWishList(id, true)
+      
   }else{
     dispatch(removeFromWishlist({ movieId: id}))
+    await addOrRemoveWishList(id, false)
+
    }
   };
 
