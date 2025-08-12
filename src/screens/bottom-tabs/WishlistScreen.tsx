@@ -5,6 +5,7 @@ import { BottomTabsProp } from '../../navigation/type';
 import { useAppSelector } from '../../redux/hooks';
 import { Movie } from '../../types/Movies';
 import { getMovieList } from '../../utils/MovieService';
+import LoadingSpinnerComponent from './LoadingSpinnerComponent';
 
 const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -39,28 +40,24 @@ const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
   // }, []);
 
   if (status === 'pending') {
-    return (
-      <View style={styles.container}>
-        <Text style={{color:'white'}}>Loading wishlist...</Text>;
-      </View>
-    );
+    return <LoadingSpinnerComponent />
   }
 
-  if (status === 'failed') {
-    return (
-      <View style={styles.container}>
-        <Text style={{color:'white'}}>Error loading wishlist: {error}</Text>;
-      </View>
-    );
-  }
+if (status === 'failed') {
+  return (
+    <View style={styles.container}>
+      <Text style={{color:'white'}}>Error loading wishlist: {error}</Text>
+    </View>
+  );
+}
 
-  if (movies.length === 0) {
-    return (
-      <View style={styles.container}>
-        <Text style={{color:'white'}}>Your wishlist is empty.</Text>;
-      </View>
-    );
-  }
+const renderEmptyWishList = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={{color:'white'}}>Your wishlist is empty.</Text>
+    </View>
+  );
+}
 
   const renderMovieItem = ({ item }: { item: Movie }) => {
     return (
@@ -69,6 +66,7 @@ const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
           source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
           style={{ width: '100%', height: '100%' }}
           resizeMode="contain"
+          
         />
       </View>
     );
@@ -82,6 +80,7 @@ const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
         keyExtractor={item => item.id.toString()}
         numColumns={4}
         contentContainerStyle={{ gap: 6 }}
+        ListEmptyComponent={renderEmptyWishList}
       />
     </View>
   );
