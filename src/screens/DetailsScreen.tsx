@@ -19,7 +19,7 @@ import SmallButtonComponent from '../componets/SmallButtonComponent';
 import Toast from 'react-native-toast-message';
 import { addToWatchList } from '../utils/MovieService';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { addToWishlist } from '../redux/slices/wishlistSlice';
+import { addToWishlist, removeFromWishlist } from '../redux/slices/wishlistSlice';
 
 const DetailsScreen = ({
   route,
@@ -77,8 +77,10 @@ const DetailsScreen = ({
 
   const handleToggleWishlistPress = () => {
     // const addToWishList = await addToWatchList(id, !inWishlist)
-   if(!isInWishlist){
+   if(isInWishlist){
     dispatch(addToWishlist({ movieId: id}))
+  }else{
+    dispatch(removeFromWishlist({ movieId: id}))
    }
 
     Toast.show({
