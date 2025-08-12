@@ -82,14 +82,6 @@ const DetailsScreen = ({
   }else{
     dispatch(removeFromWishlist({ movieId: id}))
    }
-
-    Toast.show({
-      type: 'success',
-      text1: 'Added to wishlist',
-      text2: 'Your wishlist has been updated.',
-    });
-
-    // setInWishlist(!inWishlist);
   };
 
   return (
