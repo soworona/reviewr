@@ -29,7 +29,7 @@ const DetailsScreen = ({
   const [reviews, setReview] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const isInWishlist = useAppSelector(state =>
-    state.wishlist.moviesIds.includes(id),
+    state.wishlist.movieIds.includes(id),
   );
   const dispatch = useAppDispatch();
 
