@@ -1,19 +1,29 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { handleSignOut } from '../utils/FirebaseAuth';
-import { BottomTabParamList, BottomTabsProp } from './type';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../redux/hooks';
+import { fetchWishlist } from '../redux/slices/wishlistSlice';
 import HomeScreen from '../screens/bottom-tabs/HomeScreen';
+import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
 import SearchScreen from '../screens/bottom-tabs/SearchScreen';
 import WishlistScreen from '../screens/bottom-tabs/WishlistScreen';
-import ProfileScreen from '../screens/bottom-tabs/ProfileScreen';
+import { handleSignOut } from '../utils/FirebaseAuth';
+import { BottomTabParamList } from './type';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTab = () => {
+  const dispatch = useAppDispatch();
+
   const handleLogoutPress = () => {
     handleSignOut();
   };
+
+  useEffect(() => {
+    dispatch(fetchWishlist());
+    console.log("fetch wishlist dispatched")
+  }, [dispatch]);
 
   return (
     <Tab.Navigator
