@@ -18,6 +18,8 @@ import formatDate from '../utils/FormatDate';
 import SmallButtonComponent from '../componets/SmallButtonComponent';
 import Toast from 'react-native-toast-message';
 import { addToWatchList } from '../utils/MovieService';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { addToWishlist } from '../redux/slices/wishlistSlice';
 
 const DetailsScreen = ({
   route,
@@ -27,8 +29,12 @@ const DetailsScreen = ({
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [inWishlist, setInWishlist] = useState(false);
+  const isInWishlist = useAppSelector(state =>
+    state.wishlist.moviesIds.includes(id),
+  );
+  const dispatch = useAppDispatch();
 
+  console.log('in wishlist state:', isInWishlist);
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -67,21 +73,22 @@ const DetailsScreen = ({
   }
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview', { movie_id: id });
-  }
+  };
 
+  const handleToggleWishlistPress = () => {
+    // const addToWishList = await addToWatchList(id, !inWishlist)
+   if(!isInWishlist){
+    dispatch(addToWishlist({ movieId: id}))
+   }
 
-  const handleToggleWishlistPress = async() => {
-    const addToWishList = await addToWatchList(id, !inWishlist)
+    Toast.show({
+      type: 'success',
+      text1: 'Added to wishlist',
+      text2: 'Your wishlist has been updated.',
+    });
 
-      Toast.show({
-        type: 'success',
-        text1: 'Added to wishlist',
-        text2: 'Your wishlist has been updated.',
-      });
-      
-    
-    setInWishlist(!inWishlist);
-  }
+    // setInWishlist(!inWishlist);
+  };
 
   return (
     <View style={styles.container}>
@@ -157,7 +164,7 @@ const DetailsScreen = ({
           <View style={styles.btnGrp}>
             <SmallButtonComponent label="Watch trailer" utube />
             <SmallButtonComponent
-              label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               onPress={handleToggleWishlistPress}
               watchlist
             />
