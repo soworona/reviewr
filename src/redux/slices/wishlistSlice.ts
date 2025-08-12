@@ -14,6 +14,9 @@ const wishlistSlice = createSlice({
         reducers:{
             addToWishlist : (state, action: PayloadAction<{movieId:number}>) =>{
                 state.moviesIds.push(action.payload.movieId);
+            },
+            removeFromWishlist : ( state, action: PayloadAction<{ movieId: number}>) => {
+                state.moviesIds = state.moviesIds.filter(id => id !== action.payload.movieId)
             }
         }
 })
