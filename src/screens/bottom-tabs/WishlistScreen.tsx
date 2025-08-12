@@ -2,21 +2,29 @@ import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BottomTabsProp } from '../../navigation/type';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import { Movie } from '../../types/Movies';
-import { fetchWishlist } from '../../redux/slices/wishlistSlice';
+import { getMovieList } from '../../utils/MovieService';
 
 const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const dispatch = useAppDispatch();
   const movieIds = useAppSelector(state => state.wishlist.movieIds);
   const status = useAppSelector(state => state.wishlist.status);
   const error = useAppSelector(state => state.wishlist.error);
 
-  //load from api to redux
-  useEffect(() => {
-    dispatch(fetchWishlist());
-  }, [dispatch]);
+    useEffect(() =>{
+       if (movieIds.length === 0) {
+      setMovies([]);
+      return;
+    }
+
+    const fetchMovieDetail = async() => {
+      const path = `account/22105497/watchlist/movies`;
+      const data = await getMovieList(path);
+      setMovies(data);
+    }
+      fetchMovieDetail()
+    },[movieIds])
 
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener('focus', () => {
