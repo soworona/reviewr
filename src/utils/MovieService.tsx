@@ -35,14 +35,8 @@ export async function addOrRemoveWishList (movie_id: number, isInWatchList:boole
 export async function getWishlist() {
     try {
     const response = await AxiosInstance.get(`account/22105497/watchlist/movies`);
-    const movieList:Movie[] = response.data.results.map((m: any) => ({
-      id: m.id,
-      title: m.title,
-      overview: m.overview,
-      poster_path: m.poster_path,
-      backdrop_path: m.backdrop_path,
-      release_date: m.release_date,
-      vote_average: m.vote_average
+    const movieList:number[] = response.data.results.map((m: any) => ({
+      id: m.id
     }));
     return movieList;
   } catch (error) {
