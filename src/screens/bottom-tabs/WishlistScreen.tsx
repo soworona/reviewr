@@ -1,23 +1,63 @@
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { BottomTabsProp } from '../../navigation/type';
+import { useAppSelector } from '../../redux/hooks';
 import { Movie } from '../../types/Movies';
 import { getMovieList } from '../../utils/MovieService';
-import FastImage from 'react-native-fast-image';
-import { BottomTabsProp, RootStackScreenProp } from '../../navigation/type';
+import LoadingSpinnerComponent from './LoadingSpinnerComponent';
 
-const WishlistScreen = ({navigation} :BottomTabsProp<'Wishlist'>) => {
+const WishlistScreen = ({ navigation }: BottomTabsProp<'Wishlist'>) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-    const fetchWatchList = async () => {
+  const movieIds = useAppSelector(state => state.wishlist.movieIds);
+  const status = useAppSelector(state => state.wishlist.status);
+  const error = useAppSelector(state => state.wishlist.error);
+
+    useEffect(() =>{
+       if (movieIds.length === 0) {
+      setMovies([]);
+      return;
+    }
+
+    const fetchMovieDetail = async() => {
       const path = `account/22105497/watchlist/movies`;
       const data = await getMovieList(path);
+      setMovies(data);
+    }
+      fetchMovieDetail()
+    },[movieIds])
 
-      setMovies(data);}
-      fetchWatchList();
-    })
-     return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //   const fetchWatchList = async () => {
+  //     const path = `account/22105497/watchlist/movies`;
+  //     const data = await getMovieList(path);
+
+  //     setMovies(data);}
+  //     fetchWatchList();
+  //   })
+  //    return unsubscribe;
+  // }, []);
+
+  if (status === 'pending') {
+    return <LoadingSpinnerComponent />
+  }
+
+if (status === 'failed') {
+  return (
+    <View style={styles.container}>
+      <Text style={{color:'white'}}>Error loading wishlist: {error}</Text>
+    </View>
+  );
+}
+
+const renderEmptyWishList = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={{color:'white'}}>Your wishlist is empty.</Text>
+    </View>
+  );
+}
 
   const renderMovieItem = ({ item }: { item: Movie }) => {
     return (
@@ -26,6 +66,7 @@ const WishlistScreen = ({navigation} :BottomTabsProp<'Wishlist'>) => {
           source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
           style={{ width: '100%', height: '100%' }}
           resizeMode="contain"
+          
         />
       </View>
     );
@@ -39,7 +80,7 @@ const WishlistScreen = ({navigation} :BottomTabsProp<'Wishlist'>) => {
         keyExtractor={item => item.id.toString()}
         numColumns={4}
         contentContainerStyle={{ gap: 6 }}
-
+        ListEmptyComponent={renderEmptyWishList}
       />
     </View>
   );

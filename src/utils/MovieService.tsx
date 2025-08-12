@@ -19,7 +19,7 @@ export async function getMovieList (urlPath: string) {
   }
 };
 
-export async function addToWatchList (movie_id: number, isInWatchList:boolean) {
+export async function addOrRemoveWishList (movie_id: number, isInWatchList:boolean) {
   try{
     const response =  await AxiosInstance.post(`account/22105497/watchlist`,{
     media_type: 'movie',
@@ -31,4 +31,15 @@ export async function addToWatchList (movie_id: number, isInWatchList:boolean) {
     throw error;
   }
 }
+
+export async function getWishlist() {
+    try {
+    const response = await AxiosInstance.get(`account/22105497/watchlist/movies`);
+    const movieList: number[] = response.data.results.map((m: any) => m.id);
+    return movieList;
+  } catch (error) {
+    throw error;
+  }
+};
+
 

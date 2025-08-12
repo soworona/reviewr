@@ -11,6 +11,7 @@ import CarouselComponent from '../../componets/CarouselComponent';
 import SearchBarComponent from '../../componets/SearchBarComponent';
 import { BottomTabsProp } from '../../navigation/type';
 import { debounce } from 'lodash';
+import LoadingSpinnerComponent from './LoadingSpinnerComponent';
 
 const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   const [query, setQuery] = useState('');
@@ -38,16 +39,7 @@ const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
   };
 
   if (loading) {
-    return (
-      <View
-        style={[
-          styles.container,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-      >
-        <ActivityIndicator size="large" color="#ffffffac" />
-      </View>
-    );
+    return <LoadingSpinnerComponent />
   }
 
   return (

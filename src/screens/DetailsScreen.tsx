@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -10,14 +10,19 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../componets/ButtonComponent';
+import SmallButtonComponent from '../componets/SmallButtonComponent';
 import { RootStackScreenProp } from '../navigation/type';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from '../redux/slices/wishlistSlice';
 import { Movie } from '../types/Movies';
 import { AxiosInstance } from '../utils/Axios';
-import { getAllReviews } from '../utils/ReviewFirestore';
 import formatDate from '../utils/FormatDate';
-import SmallButtonComponent from '../componets/SmallButtonComponent';
-import Toast from 'react-native-toast-message';
-import { addToWatchList } from '../utils/MovieService';
+import { addOrRemoveWishList } from '../utils/MovieService';
+import { getAllReviews } from '../utils/ReviewFirestore';
+import LoadingSpinnerComponent from './bottom-tabs/LoadingSpinnerComponent';
 
 const DetailsScreen = ({
   route,
@@ -27,8 +32,21 @@ const DetailsScreen = ({
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReview] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [inWishlist, setInWishlist] = useState(false);
 
+  const dispatch = useAppDispatch();
+  const movieIds = useAppSelector(state => state.wishlist.movieIds);
+  const status = useAppSelector(state => state.wishlist.status);
+  const isInWishlist = movieIds.includes(id);
+
+  console.log('isInWishlist:', isInWishlist);
+
+  if (status === 'pending') {
+    return <LoadingSpinnerComponent />;
+  }
+
+  if (status === 'failed') {
+    return <Text>Error</Text>;
+  }
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -54,34 +72,22 @@ const DetailsScreen = ({
   }, [id]);
 
   if (loading) {
-    return (
-      <View
-        style={[
-          styles.container,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-      >
-        <ActivityIndicator size="large" color="#ffffffac" />
-      </View>
-    );
+    return <LoadingSpinnerComponent />;
   }
+
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview', { movie_id: id });
-  }
+  };
 
-
-  const handleToggleWishlistPress = async() => {
-    const addToWishList = await addToWatchList(id, !inWishlist)
-
-      Toast.show({
-        type: 'success',
-        text1: 'Added to wishlist',
-        text2: 'Your wishlist has been updated.',
-      });
-      
-    
-    setInWishlist(!inWishlist);
-  }
+  const handleToggleWishlistPress = async () => {
+    if (!isInWishlist) {
+      dispatch(addToWishlist({ movieId: id }));
+      await addOrRemoveWishList(id, true);
+    } else {
+      dispatch(removeFromWishlist({ movieId: id }));
+      await addOrRemoveWishList(id, false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -157,7 +163,7 @@ const DetailsScreen = ({
           <View style={styles.btnGrp}>
             <SmallButtonComponent label="Watch trailer" utube />
             <SmallButtonComponent
-              label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               onPress={handleToggleWishlistPress}
               watchlist
             />

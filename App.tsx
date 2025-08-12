@@ -9,15 +9,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
 import RootStack from './src/navigation/RootStack';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 function App() {
-
   return (
-    <NavigationContainer >
-      <RootStack /> 
-      <Toast />
-    </NavigationContainer>
-    );
+    <Provider store={store}>
+      <NavigationContainer>
+        <RootStack />
+        <Toast />
+      </NavigationContainer>
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -27,4 +30,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
