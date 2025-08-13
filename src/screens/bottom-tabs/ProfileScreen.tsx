@@ -6,10 +6,12 @@ import { Movie } from '../../types/Movies';
 import { useAppSelector } from '../../redux/hooks';
 import { getMovieList } from '../../utils/MovieService';
 import FastImage from 'react-native-fast-image';
+import { getUserReviews } from '../../utils/ReviewFirestore';
 
 const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const movieIds = useAppSelector(state => state.wishlist.movieIds);
+  const [reviews, setReviews] = useState<any[]>([]);
 
   useEffect(() => {
     if (movieIds.length === 0) {
@@ -24,7 +26,23 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
     fetchMovieDetail();
   }, [movieIds]);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const userReviews = await getUserReviews();
+        const reviewsWithMovies = userReviews.map(async r => {
+          const movie = await getMovieDetail(r.id);
+          return { ...r, movie };
+        });
 
+        setReviews(reviewsWithMovies);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const renderWishlistItem = (item: Movie, index: number) => (
     <View style={styles.row}>
@@ -49,20 +67,50 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
     </View>
   );
 
+  const renderReviewItem = (item: any, index: number) => (
+      console.log('item',item);
+    <View style={styles.reviewItem}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        {/* <FastImage
+          source={{
+            uri: `https://image.tmdb.org/t/p/w200${item.movie.poster_path}`,
+          }}
+          style={{ width: 40, height: 60, borderRadius: 6 }}
+        /> */}
+      
+        <View style={{ flex: 1 }}>
+          {/* <Text style={styles.title}>{item.movie.title}</Text> */}
+          {/* <Text style={styles.reviewContent}>{item.review}</Text> */}
+        </View>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <HeaderComponent onBack={navigation.goBack} profile />
       <Text style={styles.txt}>Wishlist log</Text>
-      <FlatList
-        data={movies}
-        renderItem={({ item, index }) => renderWishlistItem(item, index)}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{ gap: 4 }}
-        ListEmptyComponent={
-          <Text style={{ color: 'white' }}>No movies yet.</Text>
-        }
-      />
+      <View style={{ flexShrink: 1 }}>
+        <FlatList
+          data={movies}
+          renderItem={({ item, index }) => renderWishlistItem(item, index)}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{ gap: 4 }}
+          ListEmptyComponent={
+            <Text style={{ color: 'white' }}>
+              No movies in your wishlist yet.
+            </Text>
+          }
+        />
+      </View>
       <Text style={styles.txt}>Reviews made by you</Text>
+      <View style={{ flexShrink: 1 }}>
+        <FlatList
+          data={reviews} // use reviews state
+          renderItem={({ item, index }) => renderReviewItem(item, index)}
+          keyExtractor={item => item.id}
+        />
+      </View>
     </View>
   );
 };
@@ -137,3 +185,6 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
+function getMovieDetail(movie_id: any) {
+  throw new Error('Function not implemented.');
+}
