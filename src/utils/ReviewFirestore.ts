@@ -2,6 +2,7 @@ import { getAuth } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { AddReviewFirestoreParams } from '../types/Firestore';
 import Toast from 'react-native-toast-message';
+import { Review } from '../types/Review';
 
 const getUserId = () => {
   const uid = getAuth().currentUser?.uid;
@@ -53,15 +54,15 @@ export async function getAllReviews(movie_id:number) {
 export async function getUserReviews() {
   const uid = getUserId();
   const docRef = await firestore()
-    .collection('reviews')
-    .where('user_id', '==', uid)
-    .get();
+  .collection('reviews')
+  .where('user_id','==',uid)
+  .get();
 
-  const userReviews = docRef.docs.map(doc => ({
+  const reviews = docRef.docs.map(doc => ({
     id: doc.id,
     ...doc.data(),
   }));
 
-  return userReviews;
+  return reviews;
 }
 

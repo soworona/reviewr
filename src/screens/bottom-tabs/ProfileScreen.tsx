@@ -27,20 +27,13 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
   }, [movieIds]);
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const userReviews = await getUserReviews();
-        const reviewsWithMovies = userReviews.map(async r => {
-          const movie = await getMovieDetail(r.id);
-          return { ...r, movie };
-        });
+     const fetchReviews = async () => {
+          const userReviews = await getUserReviews();
+          setReviews(userReviews);
+          console.log('get all reviews', userReviews);
+        };
 
-        setReviews(reviewsWithMovies);
-      } catch (error) {
-        console.error('Error fetching reviews:', error);
-      }
-    };
-
+         
     fetchReviews();
   }, []);
 
@@ -68,7 +61,6 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
   );
 
   const renderReviewItem = (item: any, index: number) => (
-      console.log('item',item);
     <View style={styles.reviewItem}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         {/* <FastImage
@@ -90,12 +82,12 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
     <View style={styles.container}>
       <HeaderComponent onBack={navigation.goBack} profile />
       <Text style={styles.txt}>Wishlist log</Text>
-      <View style={{ flexShrink: 1 }}>
+      <View style={{ flexGrow: 1 }}>
         <FlatList
           data={movies}
           renderItem={({ item, index }) => renderWishlistItem(item, index)}
           keyExtractor={item => item.id.toString()}
-          contentContainerStyle={{ gap: 4 }}
+          contentContainerStyle={{ gap: 4}}
           ListEmptyComponent={
             <Text style={{ color: 'white' }}>
               No movies in your wishlist yet.
@@ -105,11 +97,20 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
       </View>
       <Text style={styles.txt}>Reviews made by you</Text>
       <View style={{ flexShrink: 1 }}>
-        <FlatList
-          data={reviews} // use reviews state
-          renderItem={({ item, index }) => renderReviewItem(item, index)}
-          keyExtractor={item => item.id}
-        />
+          <FlatList
+            data={reviews}
+            keyExtractor={(item, index) => item.id || index.toString()}
+            renderItem={({ item }: { item: any }) => (
+              <View style={styles.reviewItem}>
+                <Text style={styles.reviewUser}>Review by {item.user_id}</Text>
+                <Text style={styles.reviewContent}>{item.review}</Text>
+              </View>
+            )}
+            ListEmptyComponent={
+              <Text style={{ color: 'white' }}>No reviews yet.</Text>
+            }
+            contentContainerStyle={{ paddingBottom: 20 }}
+          />
       </View>
     </View>
   );
