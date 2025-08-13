@@ -24,6 +24,8 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
     fetchMovieDetail();
   }, [movieIds]);
 
+
+
   const renderWishlistItem = (item: Movie, index: number) => (
     <View style={styles.row}>
       <Text style={styles.rank}>{index + 1}</Text>

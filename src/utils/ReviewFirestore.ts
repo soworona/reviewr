@@ -49,3 +49,19 @@ export async function getAllReviews(movie_id:number) {
 
   return reviews;
 }
+
+export async function getUserReviews() {
+  const uid = getUserId();
+  const docRef = await firestore()
+    .collection('reviews')
+    .where('user_id', '==', uid)
+    .get();
+
+  const userReviews = docRef.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return userReviews;
+}
+
