@@ -1,11 +1,12 @@
 // components/MovieHeader.tsx
 import React, { memo } from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import formatDate from '../utils/FormatDate';
+import { Movie } from '../types/Movies';
 
 type HeaderComponentProps = {
-  backdropPath: string;
-  posterPath: string;
+  movie: Movie;
   onBack: () => void;
 }
 
@@ -14,7 +15,7 @@ const HeaderComponent = (props: HeaderComponentProps) => {
     <View style={styles.header}>
       <FastImage
         source={{
-         uri: `https://image.tmdb.org/t/p/w500${props.backdropPath}`,
+          uri: `https://image.tmdb.org/t/p/w500${props.movie.backdrop_path}`,
         }}
         style={styles.banner}
         resizeMode="cover"
@@ -22,22 +23,65 @@ const HeaderComponent = (props: HeaderComponentProps) => {
 
       <TouchableOpacity
         onPress={props.onBack}
-        style={styles.backButton}
+        style={{ position: 'absolute', top: 10 }}
       >
         <Image
           source={require('../assets/icons/Back.png')}
-          style={styles.backIcon}
+          style={{ height: 25, objectFit: 'contain' }}
         />
       </TouchableOpacity>
 
       <View style={styles.posterContainer}>
         <FastImage
           source={{
-            uri: `https://image.tmdb.org/t/p/w500${props.posterPath}`,
+            uri: `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`,
           }}
           style={styles.poster}
           resizeMode="contain"
         />
+      </View>
+
+      <View style={styles.headerInfo}>
+        <Text style={styles.headerTitle}>{props.movie.title}</Text>
+        <Text style={styles.headerSubTitle}>
+          <Image
+            source={require('../assets/icons/Director.png')}
+            style={styles.headerIcon}
+          />{' '}
+          Directed by Alfonso Cuarón
+        </Text>
+        <Text style={styles.headerSubTitle}>
+          <Image
+            source={require('../assets/icons/Person.png')}
+            style={styles.headerIcon}
+          />{' '}
+          Warner Bros. Pictures
+        </Text>
+      </View>
+
+      {/* Bottom Info */}
+      <View style={styles.headerBottom}>
+        <Text style={styles.headerSubTitle}>
+          <Image
+            source={require('../assets/icons/Time.png')}
+            style={styles.headerIcon}
+          />{' '}
+          2hr 30 min
+        </Text>
+        <Text style={styles.headerSubTitle}>
+          <Image
+            source={require('../assets/icons/Date.png')}
+            style={styles.headerIcon}
+          />{' '}
+          {formatDate(props.movie.release_date)}
+        </Text>
+        <Text style={styles.headerSubTitle}>
+          <Image
+            source={require('../assets/icons/Watchlist.png')}
+            style={styles.headerIcon}
+          />{' '}
+          Not watched
+        </Text>
       </View>
     </View>
   );
@@ -45,33 +89,60 @@ const HeaderComponent = (props: HeaderComponentProps) => {
 
 const styles = StyleSheet.create({
   header: {
-    position: 'relative',
+    backgroundColor: '#4a5e68ff',
+    paddingHorizontal: 8,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#817f8d33',
+    paddingVertical: 8,
+    elevation: 5,
   },
   banner: {
     width: '100%',
-    height: 200,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 10,
-  },
-  backIcon: {
-    height: 25,
-    width: 25,
-    resizeMode: 'contain',
+    height: 150,
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 10,
+    elevation: 6,
   },
   posterContainer: {
     position: 'absolute',
-    bottom: -50,
+    height: 163,
+    width: 106,
+    elevation: 6,
     left: 20,
-    elevation: 5,
+    top: 65,
   },
   poster: {
-    height: 150,
-    width: 100,
-    borderRadius: 8,
+    height: '100%',
+    width: '100%',
+    borderRadius: 14,
+  },
+  headerInfo: {
+    left: 125,
+    width: 205,
+    gap: 4,
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: 'white',
+  },
+  headerSubTitle: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#ffffffbf',
+  },
+  headerIcon: {
+    height: 10,
+    width: 12,
+    objectFit: 'contain',
+  },
+  headerBottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginTop: 10,
   },
 });
 
