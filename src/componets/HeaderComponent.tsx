@@ -6,19 +6,23 @@ import formatDate from '../utils/FormatDate';
 import { Movie } from '../types/Movies';
 
 type HeaderComponentProps = {
-  movie: Movie;
+  movie?: Movie;
   onBack: () => void;
+  profile? : boolean
 }
 
 const HeaderComponent = (props: HeaderComponentProps) => {
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   return (
     <View style={styles.header}>
       <FastImage
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500${props.movie.backdrop_path}`,
-        }}
+         source={{
+    uri: props.profile
+      ? `${imageBaseUrl}/9pKwSbMk7W8WR5d4oAVog3dWNg0.jpg`
+      : `${imageBaseUrl}${props.movie?.backdrop_path}`,
+  }}
         style={styles.banner}
-        resizeMode="cover"
+        resizeMode='cover'
       />
 
       <TouchableOpacity
@@ -31,18 +35,39 @@ const HeaderComponent = (props: HeaderComponentProps) => {
         />
       </TouchableOpacity>
 
-      <View style={styles.posterContainer}>
+{props.movie &&(      <View style={styles.posterContainer}>
         <FastImage
           source={{
-            uri: `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`,
+            uri:`https://image.tmdb.org/t/p/w500${props.movie.poster_path}`,
           }}
           style={styles.poster}
           resizeMode="contain"
         />
-      </View>
+      </View>)}
+      { props.profile && (
+        <View style={styles.profileImgContainer}>
+          <FastImage
+          source={
+            require('../assets/profile.jpg')
+          }
+          style={styles.profile}
+          resizeMode="contain"/>
+        </View>
+
+      )}
 
       <View style={styles.headerInfo}>
-        <Text style={styles.headerTitle}>{props.movie.title}</Text>
+        <Text style={styles.headerTitle}>{props.profile? 'Profile name' :props.movie?.title}</Text>
+        {props.profile && (<Text style={styles.headerSubTitle}>@prof;le</Text>)}
+{props.profile ?(
+  <>
+  <View style ={{flexDirection:'row', gap:10}}>
+  <Text style={styles.headerSubTitle}><Text style={{color:'white'}}>12</Text> Followers</Text>
+    <Text style={styles.headerSubTitle}><Text style={{color:'white'}}>15</Text> Following</Text>
+  </View>
+
+  </>
+):(          <>
         <Text style={styles.headerSubTitle}>
           <Image
             source={require('../assets/icons/Director.png')}
@@ -57,10 +82,10 @@ const HeaderComponent = (props: HeaderComponentProps) => {
           />{' '}
           Warner Bros. Pictures
         </Text>
+        </>)}
       </View>
 
-      {/* Bottom Info */}
-      <View style={styles.headerBottom}>
+{!props.profile && (      <View style={styles.headerBottom}>
         <Text style={styles.headerSubTitle}>
           <Image
             source={require('../assets/icons/Time.png')}
@@ -73,7 +98,7 @@ const HeaderComponent = (props: HeaderComponentProps) => {
             source={require('../assets/icons/Date.png')}
             style={styles.headerIcon}
           />{' '}
-          {formatDate(props.movie.release_date)}
+          {props.movie && formatDate(props.movie.release_date)}
         </Text>
         <Text style={styles.headerSubTitle}>
           <Image
@@ -82,7 +107,7 @@ const HeaderComponent = (props: HeaderComponentProps) => {
           />{' '}
           Not watched
         </Text>
-      </View>
+      </View>)}
     </View>
   );
 };
@@ -117,6 +142,20 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderRadius: 14,
+  },
+  profileImgContainer:{
+  position: 'absolute',
+  height:120,
+  width: 120,
+  bottom:20,
+  left:10,
+
+  },
+  profile:{
+    height: '100%',
+    width: '100%',
+    borderRadius: 60,
+    elevation:15
   },
   headerInfo: {
     left: 125,
