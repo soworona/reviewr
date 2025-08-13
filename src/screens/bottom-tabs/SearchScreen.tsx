@@ -1,16 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
+import { useCallback, useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   StyleSheet,
-  TouchableOpacity,
-  View,
+  TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CarouselComponent from '../../componets/CarouselComponent';
 import SearchBarComponent from '../../componets/SearchBarComponent';
 import { BottomTabsProp } from '../../navigation/type';
-import { debounce } from 'lodash';
 import LoadingSpinnerComponent from './LoadingSpinnerComponent';
 
 const SearchScreen = ({ navigation }: BottomTabsProp<'Search'>) => {
