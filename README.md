@@ -28,8 +28,10 @@ Users can create an account, log in, search for movies, and view details fetched
 - **TMDB Integration** – Fetch real-time movie details using the TMDB API.
   
 ## Demo Video
+[🎥 Watch the Demo on Google Drive](https://drive.google.com/file/d/1DE9lXHSro0eE2mNAc4-9VPoz3JR2usbQ/preview)
 
 ## Screenshots
+
 
 ## Technology used:
 - **React Native** – Cross-platform mobile app development
