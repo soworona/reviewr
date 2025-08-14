@@ -32,21 +32,21 @@ Users can create an account, log in, search for movies, and view details fetched
 
 ## Screenshots
 <p align="center">
-  <img src="assets/signup.jpg" width="30%" />
-  <img src="assets/login.jpg" width="30%" />
-  <img src="assets/home.jpg" width="30%" />
+  <img src="assets/signup.jpeg" width="30%" />
+  <img src="assets/login.jpeg" width="30%" />
+  <img src="assets/home.jpeg" width="30%" />
 </p>
 
 <p align="center">
-  <img src="assets/search.jpg" width="30%" />
-  <img src="assets/searchresult.jpg" width="30%" />
-   <img src="assets/details.jpg" width="30%" />
+  <img src="assets/search.jpeg" width="30%" />
+  <img src="assets/searchresult.jpeg" width="30%" />
+   <img src="assets/details.jpeg" width="30%" />
 </p>
 
 <p align="center">
-  <img src="assets/add review.jpg" width="30%" />
-  <img src="assets/wishlist.jpg" width="30%" />
-   <img src="assets/profile.jpg" width="30%" />
+  <img src="assets/add review.jpeg" width="30%" />
+  <img src="assets/wishlist.jpeg" width="30%" />
+   <img src="assets/profile.jpeg" width="30%" />
 </p>
 
 ## Technology used:
