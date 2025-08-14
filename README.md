@@ -44,7 +44,7 @@ Users can create an account, log in, search for movies, and view details fetched
 </p>
 
 <p align="center">
-  <img src="assets/add review.jpeg" width="30%" />
+  <img src="assets/addreview.jpeg" width="30%" />
   <img src="assets/wishlist.jpeg" width="30%" />
    <img src="assets/profile.jpeg" width="30%" />
 </p>
