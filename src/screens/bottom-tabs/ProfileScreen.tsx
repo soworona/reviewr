@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, ScrollView, ScrollViewBase, StyleSheet, Text, View } from 'react-native';
 import HeaderComponent from '../../componets/HeaderComponent';
 import { BottomTabsProp } from '../../navigation/type';
 import { useEffect, useState } from 'react';
@@ -7,11 +7,12 @@ import { useAppSelector } from '../../redux/hooks';
 import { getMovieList } from '../../utils/MovieService';
 import FastImage from 'react-native-fast-image';
 import { getUserReviews } from '../../utils/ReviewFirestore';
+import { Review } from '../../types/Review';
 
 const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const movieIds = useAppSelector(state => state.wishlist.movieIds);
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     if (movieIds.length === 0) {
@@ -30,10 +31,8 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
      const fetchReviews = async () => {
           const userReviews = await getUserReviews();
           setReviews(userReviews);
-          console.log('get all reviews', userReviews);
+          console.log('reviews: ', userReviews)
         };
-
-         
     fetchReviews();
   }, []);
 
@@ -60,26 +59,10 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
     </View>
   );
 
-  const renderReviewItem = (item: any, index: number) => (
-    <View style={styles.reviewItem}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        {/* <FastImage
-          source={{
-            uri: `https://image.tmdb.org/t/p/w200${item.movie.poster_path}`,
-          }}
-          style={{ width: 40, height: 60, borderRadius: 6 }}
-        /> */}
-      
-        <View style={{ flex: 1 }}>
-          {/* <Text style={styles.title}>{item.movie.title}</Text> */}
-          {/* <Text style={styles.reviewContent}>{item.review}</Text> */}
-        </View>
-      </View>
-    </View>
-  );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}
+       showsVerticalScrollIndicator={false}>
       <HeaderComponent onBack={navigation.goBack} profile />
       <Text style={styles.txt}>Wishlist log</Text>
       <View style={{ flexGrow: 1 }}>
@@ -96,13 +79,13 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
         />
       </View>
       <Text style={styles.txt}>Reviews made by you</Text>
-      <View style={{ flexShrink: 1 }}>
+      <View style={{ flexGrow: 1 }}>
           <FlatList
             data={reviews}
             keyExtractor={(item, index) => item.id || index.toString()}
             renderItem={({ item }: { item: any }) => (
               <View style={styles.reviewItem}>
-                <Text style={styles.reviewUser}>Review by {item.user_id}</Text>
+                <Text style={styles.reviewUser}>Review on MOVIE ID:{item.movie_id}</Text>
                 <Text style={styles.reviewContent}>{item.review}</Text>
               </View>
             )}
@@ -112,21 +95,21 @@ const ProfileScreen = ({ navigation }: BottomTabsProp<'Profile'>) => {
             contentContainerStyle={{ paddingBottom: 20 }}
           />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#052433ff',
     paddingHorizontal: 16,
-    gap: 16,
   },
   txt: {
     color: 'white',
     fontSize: 18,
     fontWeight: 600,
+      marginVertical: 16, 
   },
   row: {
     flexDirection: 'row',

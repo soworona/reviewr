@@ -57,8 +57,8 @@ const HeaderComponent = (props: HeaderComponentProps) => {
       )}
 
       <View style={styles.headerInfo}>
-        <Text style={styles.headerTitle}>{props.profile? 'Profile name' :props.movie?.title}</Text>
-        {props.profile && (<Text style={styles.headerSubTitle}>@prof;le</Text>)}
+        <Text style={styles.headerTitle}>{props.profile? 'apple123' :props.movie?.title}</Text>
+        {props.profile && (<Text style={styles.headerSubTitle}>@dilhara12</Text>)}
 {props.profile ?(
   <>
   <View style ={{flexDirection:'row', gap:10}}>

@@ -58,9 +58,11 @@ export async function getUserReviews() {
   .where('user_id','==',uid)
   .get();
 
-  const reviews = docRef.docs.map(doc => ({
+  const reviews:Review[] = docRef.docs.map(doc => ({
     id: doc.id,
-    ...doc.data(),
+    movie_id: doc.data().movie_id,
+    review: doc.data().review,
+    user_id:doc.data().user_id
   }));
 
   return reviews;

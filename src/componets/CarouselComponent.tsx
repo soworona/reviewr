@@ -26,11 +26,6 @@ const CarouselComponent = (props: CarouselComponentProps) => {
         const data = await getMovieList(path);
         setMovies(data);
       } catch (err) {
-        Toast.show({
-          type: 'error',
-          text1: 'Unable to load movie list!',
-          text2: 'Something went wrong',
-        });
       }
     };
     loadMovieList();
