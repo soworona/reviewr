@@ -4,6 +4,7 @@ import { Movie } from '../types/Movies';
 import { getMovieList } from '../utils/MovieService';
 import CardComponent from './CardComponent';
 import Toast from 'react-native-toast-message';
+import LoadingSpinnerComponent from '../screens/bottom-tabs/LoadingSpinnerComponent';
 
 type CarouselComponentProps = {
   label: string;
@@ -25,11 +26,6 @@ const CarouselComponent = (props: CarouselComponentProps) => {
         const data = await getMovieList(path);
         setMovies(data);
       } catch (err) {
-        Toast.show({
-          type: 'error',
-          text1: 'Unable to load movie list!',
-          text2: 'Something went wrong',
-        });
       }
     };
     loadMovieList();
@@ -57,7 +53,7 @@ const CarouselComponent = (props: CarouselComponentProps) => {
         ]}
         />
       ): (
-        <Text style={{color:'white'}}>No results found.</Text>
+        <LoadingSpinnerComponent />
       )}
     </View>
   );
