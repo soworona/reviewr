@@ -12,11 +12,10 @@ Reviewr - moving reviewing app
 - [Future Enhancements](#future-enhancements)
 
 
-
 ## About the Project
 
-**Reviewr** is a mobile application built with **React Native** that allows users to explore movies, manage a wishlist, and share reviews.  
-Users can create an account, log in, search for movies, and view details fetched from the **TMDB API**.
+**Reviewr** is a mobile application built with React Native that allows users to explore movies, manage a wishlist, and share reviews.  
+Users can create an account, log in, search for movies, and view details fetched from the TMDB API.
 
 
 ## Features
@@ -31,6 +30,9 @@ Users can create an account, log in, search for movies, and view details fetched
 [🎥 Watch the Demo on Google Drive](https://drive.google.com/file/d/1DE9lXHSro0eE2mNAc4-9VPoz3JR2usbQ/preview)
 
 ## Screenshots
+<details>
+<summary>View Screenshots</summary>
+  
 <p align="center">
   <img src="assets/signup.jpeg" width="30%" />
   <img src="assets/login.jpeg" width="30%" />
@@ -48,6 +50,7 @@ Users can create an account, log in, search for movies, and view details fetched
   <img src="assets/wishlist.jpeg" width="30%" />
    <img src="assets/profile.jpeg" width="30%" />
 </p>
+</details>
 
 ## Technology used:
 - **React Native** – Cross-platform mobile app development
