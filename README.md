@@ -1,97 +1,64 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Project Title
 
-# Getting Started
+Reviewr - moving reviewing app
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Table of Contents
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Demo Video](#demo-video)
+- [Screenshots](#screenshots)
+- [Technology Used](#technology-used)
+- [Setup Instructions](#setup-instructions)
+- [Future Enhancements](#future-enhancements)
 
-## Step 1: Start Metro
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## About the Project
 
-```sh
-# Using npm
-npm start
+**Reviewr** is a mobile application built with **React Native** that allows users to explore movies, manage a wishlist, and share reviews.  
+Users can create an account, log in, search for movies, and view details fetched from the **TMDB API**.
 
-# OR using Yarn
-yarn start
-```
 
-## Step 2: Build and run your app
+## Features
+- **User Authentication** – Sign up, log in, and secure account management with Firebase.
+- **Wishlist Management** – Add or remove movies from your personal wishlist.
+- **Movie Reviews** – Write and view reviews for movies.
+- **Movie Search** – Search for movies by title.
+- **Profile Dashboard** – View your wishlist and reviews in one place.
+- **TMDB Integration** – Fetch real-time movie details using the TMDB API.
+  
+## Demo Video
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Screenshots
 
-### Android
+## Technology used:
+- **React Native** – Cross-platform mobile app development
+- **Redux** – State management
+- **React Navigation** – Screen navigation
+- **Axios** – API requests
+- **Firebase** – Authentication & Firestore database
+- **TMDB API** – Movie data source
 
-```sh
-# Using npm
-npm run android
+## Setup Instructions
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sworna13/reviewr.git
+   cd reviewr
+2. **Install dependencies**
+   ```bash
+   yarn install
+3. **Start the development server**
+   ```bash
+   yarn start
+4. **Run on Adnroid**
+   ```bash
+   yarn android
 
-# OR using Yarn
-yarn android
-```
+## Future Enhancements
 
-### iOS
+-  **Real-Time Reviews** – Display newly added reviews instantly on the movie details page without requiring a refresh.
+-  **Movie Ratings** – Implement a star-based rating system for movies.
+-  **Review Editing & Deletion** – Allow users to edit or remove their own reviews.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
