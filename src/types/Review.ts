@@ -3,3 +3,4 @@ export type Review ={
     movie_id:number;
     review:string;
     user_id:string
+}

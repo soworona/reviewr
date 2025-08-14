@@ -31,7 +31,23 @@ Users can create an account, log in, search for movies, and view details fetched
 [🎥 Watch the Demo on Google Drive](https://drive.google.com/file/d/1DE9lXHSro0eE2mNAc4-9VPoz3JR2usbQ/preview)
 
 ## Screenshots
+<p align="center">
+  <img src="assets/signup.jpg" width="30%" />
+  <img src="assets/login.jpg" width="30%" />
+  <img src="assets/home.jpg" width="30%" />
+</p>
 
+<p align="center">
+  <img src="assets/search.jpg" width="30%" />
+  <img src="assets/searchresult.jpg" width="30%" />
+   <img src="assets/details.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="assets/add review.jpg" width="30%" />
+  <img src="assets/wishlist.jpg" width="30%" />
+   <img src="assets/profile.jpg" width="30%" />
+</p>
 
 ## Technology used:
 - **React Native** – Cross-platform mobile app development
